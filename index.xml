@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yangzw</title>
+    <link>https://crazyyzw.top/</link>
+    <description>Recent content on Yangzw</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 15 Jun 2022 21:29:01 +0800</lastBuildDate><atom:link href="https://crazyyzw.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quartz使用</title>
+      <link>https://crazyyzw.top/posts/quartz/</link>
+      <pubDate>Wed, 15 Jun 2022 21:29:01 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/quartz/</guid>
+      <description>Quartz是一个开源的作业调度框架，它完全由Java写成，并设计用于J2SE和J2EE应用中。
+参考博客网址
+一、Quartz基本配置 Quartz三大核心元素：Scheduler(调度器)、Trigger(触发器)、job(任务)。
+通过Scheduler启动Trigger来执行job。
+pom依赖：
+&amp;lt;!--quartz相关依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.quartz-scheduler&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;quartz&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.2.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.quartz-scheduler&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;quartz-jobs&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.2.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;gt;&amp;gt;&amp;gt;&amp;gt;SpringBoot替换为：&amp;gt;&amp;gt;&amp;gt;&amp;gt; &amp;lt;!--quartz依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-quartz&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 在Quartz JAR文件的org.quartz包下就包含一个quartz.properties属性配置文件并提供了默认属性。如果需要调整默认配置，可以在类路径下建立一个新的quartz.properties，它将自动被Quartz加载并覆盖默认的设置。
+配置信息如下：
+#可以为任意字符串，对于scheduler来说此值没有意义，但是可以区分同一系统中多个不同的实例， #如果使用了集群的功能，就必须对每一个实例使用相同的名称，这样使这些实例“逻辑上”是同一个scheduler。 org.quartz.scheduler.instanceName = JobScheduler #可以是任意字符串，但如果是集群，scheduler实例的值必须唯一，可以使用AUTO自动生成。 org.quartz.scheduler.instanceId = AUTO org.quartz.scheduler.rmi.export = false org.quartz.scheduler.rmi.proxy = false # 默认false，若是在执行Job之前Quartz开启UserTransaction，此属性应该为true。 #Job执行完毕，JobDataMap更新完（如果是StatefulJob）事务就会提交。默认值是false，可以在job类上使用@ExecuteInJTATransaction 注解，以便在各自的job上决定是否开启JTA事务。 org.quartz.scheduler.wrapJobExecutionInUserTransaction = false #一个scheduler节点允许接收的trigger的最大数，默认是1，这个值越大，定时任务执行的越多，但代价是集群节点之间的不均衡。 org.quartz.scheduler.batchTriggerAcquisitionMaxCount=1 #线程池的实例类，（一般使用SimpleThreadPool即可满足几乎所有用户的需求） org.quartz.threadPool.class= org.quartz.simpl.SimpleThreadPool #线程数量，不会动态增加 org.quartz.threadPool.threadCount= 10 #线程优先级 org.quartz.threadPool.threadPriority= 5 #加载任务代码的ClassLoader是否从外部继承 org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread= true #是否设置调度器线程为守护线程 org.quartz.scheduler.makeSchedulerThreadDaemon: true #将schedule相关信息保存在RAM中，轻量级，速度快，遗憾的是应用重启时相关信息都将丢失。 #org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore #最大能忍受的触发超时时间，如果超时则认为“失误” #org.</description>
+    </item>
+    
+    <item>
+      <title>分布式系统介绍</title>
+      <link>https://crazyyzw.top/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Sun, 15 May 2022 21:29:01 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</guid>
+      <description>优点 可靠性、高容错性
+一台服务器的崩溃，不会影响其他服务器，其他服务器仍能提供服务。
+可扩展性
+如果系统服务能力不足，可以水平扩展更多服务器。
+灵活性
+可以很容易安装、实施、扩容和升级系统。
+性能高
+用于多台服务器的计算能力，比单台服务器处理速度更快。
+性价比高
+分布式系统对服务器硬件要求很低，可以选用廉价服务器搭建分布式集群，从而得到更好的性价比。
+缺点 排查难点高
+由于系统分布在多台服务器上，故障排查和问题诊断难度较高。
+软件支持少
+分布式系统解决方案的软件支持较少。
+建设成本高
+需要多台服务器搭建分布式系统。
+综上，分布式提高服务器性能、降低成本，但对于技术门槛偏高
+分布式软件解决方案 分布式锁
+分布式锁是单击锁的一种扩展，主要是为了锁住分布式系统中的物理块或逻辑块，用以此保证不同服务之间的逻辑和数据的一致性。目前，主流的分布式锁实现方式有3种：
+基于数据库实现的分布式锁； 基于Reids实现的分布式锁； 基于Zookeeper实现的分布式锁。 分布式消息
+分布式消息中间件是支持在分布式系统中发送和接受消息的软件基础设施。常见的分布式消息中间件有ActiveMQ、RabbitMQ、Kafka、MetaQ等。
+MetaQ（全称Metamorphosis）是一个高性能、高可用、可扩展的分布式消息中间件，思路起源于LinkedIn的Kafka，但并不是Kafka的一个拷贝。MetaQ具有消息存储顺序写、吞吐量大和支持本地和XA事务等特性，适用于大吞吐量、顺序消息、广播和日志数据 传输等场景。
+数据库分片分组
+针对大数据量的数据库，一般会采用“分片分组”策略
+分片（shard）： 主要解决扩展问题，属于水平拆分。引入分片，就引入了数据路由和分区键的概念。其中，分表解决的是数据量过大的问题，分库解决的是数据库性能瓶颈的问题。 分组（group）： 主要解决可用性问题，通过主从复制的方式实现，并提供读写分离策略用以提高数据库性能。 分布式计算
+分布式计算（Distributed computing）是一种“把需要进行大量运算的工程数据分割成小块，由多台计算机分别计算；在上传运算结果后，将结果统一合并得出数据结论”的科学。
+当前的高性能服务器在处理海量数据时，其计算能力、内存容量等指标都远远无法达到要求。在大数据时代，工程师采用廉价的服务器组成分布式服务集群，以集群协作的方式完成海量数据的处理，从而解决单台服务器在计算与存储上的瓶颈。Hadoop、Storm以及Spark是常用的分布式计算中间件，Hadoop是对非实时数据做批量处理的中间件，Storm和Spark是对实时数据做流式处理的中间件。
+分布式硬件部署方案 单机版部署方案
+单台服务器作为接口服务器同时，同时部署了MySQL数据库、Redis缓存等相关，该架构适用于演示环境、测试环境以及不怕宕机且日PV在5万以内的小型商业应用。
+中小型分布式硬件部署方案
+通过SLB或Nginx组成一个负载均衡的接口服务器集群、MySQL集群、Redis集群，该架构适用于日PV在500万以内的中小型商业应用。
+大型分布式硬件部署方案
+通过SLB/Nginx组成一个负载均衡的接口服务器集群，利用分片分组策略组成一个MySQL数据库集群和Redis缓存集群，该架构适用于日PV在500万以上的大型商业应用。</description>
+    </item>
+    
+    <item>
+      <title>二维码原理</title>
+      <link>https://crazyyzw.top/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
+      <pubDate>Mon, 09 May 2022 22:45:23 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</guid>
+      <description>二维码生成 二维码是一种特殊类型的条形码，易于被光学扫描仪读取来编码文本和数字，可对数字、字母和日文字符等信息进行编码。最小二维码是21×21像素，最大的是177×177像素。二维码具有纠错能力，总共分为4个级别，最低的是L，它可以校准7%的字码，然后是M可以校准15%的字码，再然后是Q可以校准25%的字码，最后是H可以校准30%的字码。
+创建步骤 数据分析：确定是否符号数字、字母、字节或日文模式的编码，再进行最优化的编码模式选择。 数据编码：下一级详细讲解。 生成纠错码：当得到文本对应的数据码后，必须再使用这些数据码生成纠错码，为了对扫描仪扫描结果存在错误进行纠正 最终编码：将生成的数据码与纠错码必须按照一定的顺序排列。 模块放置在矩阵：排列好数据码和纠错码后，需将这些二进制数字以特定的方式放置在二维码矩阵中。 掩码图案：二维码规范中定义了八个掩码图案，每种特定的图案可以改变原始二维码图案。 格式和版本信息：在先前步骤中留下空白的特定区域中增加格式和（如有必要）的版本信息。格式信息定义了纠错等级和掩码图案的模式。版本信息定义了二维码矩阵的大小和并且仅存在于较大的二维码中。 数据编码 二维码有如下编码模式：
+数字编码 字符编码 字节编码 日文编码 Extended Channel Interpretation（ECI）mode Structured Append mode FNC1 mode 如果输入字符串只包含数字，请使用数字编码模式；若数字模式不适用时，则选择字符编码模式(小写字母不能使用字符编码模式)；若字符编码也不适用且字符可以在ISO-8859-1字符集中找到，则使用字节编码模式；如果所有字符都在Shift JIS字符集中，请使用日文编码模式。
+单个二维码中可以使用多种编码模式
+每种编码模式都使用不同方法将文本转换为二进制数字，并且使用尽可能短的二进制数字来编码数据。
+数据编码步骤如下：
+选择纠错级别 确定数据的最小版本 增加模式指示符 增加字符计数指示符 使用所选模式进行编码 分成8位码字和添加补齐码（如果必要的话） 确定此二维码所需的位数 添加终止符（如有需要） 添加更多0，使长度为8的倍数 如果字符串仍然太短，则添加不起 二维码识别 二维码识别原理如下：
+寻找二维码的三个角的定位角点，需要对图片进行平滑滤波，二值化，寻找轮廓，筛选轮廓中有两个子轮廓的特征，从筛选后的轮廓中找到面积最接近的3个即是二维码的定位角点 判断3个角点处于什么位置，主要用来对图片进行透视校正(PS:相机拍到的图片)或者仿射校正(对网站上生成的图片进行缩放拉伸旋转等操作后得到的图片)。需要判断三个角点围成的三角形和最大的角就是二维码左上角的点。然后根据这个角的两边的角度差确定另外两个角点的左下和右上位置。 根据以上特征识别二维码的范围 </description>
+    </item>
+    
+    <item>
+      <title>Durid的介绍及应用场景</title>
+      <link>https://crazyyzw.top/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
+      <pubDate>Mon, 25 Apr 2022 19:49:11 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
+      <description>Apache Druid是一个高性能的实时分析型数据库
+云原生、流原生的分析型数据库
+Druid专为需要快速数据查询与摄入的工作流程而设计，在即时数据可见性、即时查询、运营分析以及高并发等方面表现非常出色。在实际中众多场景下数据仓库解决方案中，可以考虑将Druid当做一种开源的替代解决方案。 可轻松与现有的数据管道进行集成
+Druid原生支持从Kafka、Amazon Kinesis等消息总线中流式的消费数据，也同时支持从HDFS、Amazon S3等存储服务中批量的加载数据文件。 较传统方案提升近百倍的效率
+Druid创新地在架构设计上吸收和结合了数据仓库、时序数据库以及检索系统的优势，在已经完成的基准测试中展现出来的性能远远超过数据摄入与查询的传统解决方案。 解锁了一种新型的工作流程
+Druid为点击流、APM、供应链、网络监测、市场营销以及其他事件驱动类型的数据分析解锁了一种新型的查询与工作流程，它专为实时和历史数据高效快速的即席查询而设计。 可部署在AWS/GCP/Azure,混合云,Kubernetes, 以及裸机上
+无论在云上还是本地，Druid可以轻松的部署在商用硬件上的任何*NIX环境。部署Druid也是非常简单的，包括集群的扩容或者下线都也同样很简单。 Druid最常被当做数据库来用以支持实时摄取、高性能查询和高稳定运行的应用场景，同时，Druid也通常被用来助力分析型应用的图形化界面，或者当做需要快速聚合的高并发后端API，Druid最适合应用于面向事件类型的数据。
+Druid特征 列式存储 可扩展的分布式系统 大规模并行处理 实时或批量摄取 自修复、自平衡、易于操作 不会丢失数据的云原生容错架构 用于快速过滤的索引 基于时间的分区 近似算法 摄取时自动汇总整合 Druid使用场景 数据插入频率比较高，但较少更新数据
+大多数查询场景为聚合查询和分组查询，同时还有一定得检索与扫描查询
+将数据查询延迟目标定位100毫秒到几秒钟之间
+数据具有时间属性（Durid针对时间做了优化和设计）
+在多表场景下，每次查询仅命中一个大的分布式表，查询又可能命中多个较小的lookup表
+场景中包含高基维度数据列（例如URL，用户ID等），并且需要对其进行快速计数和排序
+需要从Kafka、HDFS、对象存储（如Amanzon S3）中加载数据</description>
+    </item>
+    
+    <item>
+      <title>MyBatis介绍及使用</title>
+      <link>https://crazyyzw.top/posts/mybatis/</link>
+      <pubDate>Fri, 15 Apr 2022 18:30:23 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/mybatis/</guid>
+      <description>一、什么是MyBatis？ MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
+1.MyBatis衍生工具 MyBatis-Plus：是一个MyBatis增强工具，在MyBatis的基础上只做增强不做改变，为简化开发、提高效率而生。
+TkMyBatis：是基于 Mybatis 框架开发的一个工具，通过调用它提供的方法实现对单表的数据操作，不需要写任何 sql 语句，这极大地提高了项目开发效率。
+2.MyBatis引入 1.可以通过下载mybatis的jar包置于类路径(classpath)中
+2.单独使用MyBatis加入pom依赖：
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mybatis&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mybatis&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;x.x.x&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 3.集成SpringBoot中pom依赖：
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mybatis.spring.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mybatis-spring-boot-starter&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;x.x.x&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 二、MyBatis使用 简单使用配置可以通过输入流（InputStream）实现：
+String resource = &amp;#34;&amp;lt;mybatis-config.xml的全限定名&amp;gt;&amp;#34;; InputStream inputStream = Resources.getResourceAsStream(resource); SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder.build(inputStream); 也可以通过XML构建SqlSessionFactory：
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;!DOCTYPE configuration PUBLIC &amp;#34;-//mybatis.org//DTD Config 3.0//EN&amp;#34; &amp;#34;http://mybatis.org/dtd/mybatis-3-config.dtd&amp;#34;&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;!--根据需要进行配置--&amp;gt; &amp;lt;/configuration&amp;gt; 不使用XML构建SQLSessionFactory:
+DataSource dataSource = BlogDataSourceFactory.</description>
+    </item>
+    
+    <item>
+      <title>Stream常见用法</title>
+      <link>https://crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 12 Apr 2022 21:29:01 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</guid>
+      <description>匹配集合数据 boolean isFound = userList.stream().anyMatch(user -&amp;gt; Objects.equals(user.getId(), userId)); 过滤集合数据 List&amp;lt;UserDO&amp;gt; resultList = userList.stream() .filter(user -&amp;gt; Boolean.TRUE.equals(user.getIsSuper())) .collect(Collectors.toList()); 汇总集合数据 double total = accountList.stream().mapToDouble(Account::getBalace).sum(); 转化集合数据 List&amp;lt;UserVO&amp;gt; userVOList = userDOList.stream().map(this::transUser).collect(Collectors.toList()); 分组集合数据 Map&amp;lt;Long, List&amp;lt;UserDO&amp;gt;&amp;gt; roleUserMap = userDOList.stream() .collect(Collectors.groupingBy(UserDO::getRoleId)); 分组汇总集合 roleTotalMap = accountList.stream() .collect(Collectors.groupingBy(Account::getRoleId,Collectors.summingDouble(Account::getBalance))); 生成范围集合 int[] array1 = IntStream.rangeClosed(1,N).toArray(); int[] array2 = IntStream.iterate(1, n -&amp;gt; n*2).limit(N).toArray(); </description>
+    </item>
+    
+    <item>
+      <title>完全卸载删除gitlab</title>
+      <link>https://crazyyzw.top/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</link>
+      <pubDate>Sun, 10 Apr 2022 20:39:49 +0530</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</guid>
+      <description>1、停止gitlab gitlab-ctl stop 2、卸载gitlab rpm -e gitlab-ce 3、查看gitlab进程 ps aux | grep gitlab 4、杀掉/opt/gitlab/service.log进程 kill -9 进程号 5、删除所有包含gitlab文件 find / -name gitlab | xargs rm -rf </description>
+    </item>
+    
+    <item>
+      <title>Blüdhaven</title>
+      <link>https://crazyyzw.top/projects/bludhaven/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://crazyyzw.top/projects/bludhaven/</guid>
+      <description>History Blüdhaven was a former whaling town, which was officially incorporated as a &amp;ldquo;Commonwealth&amp;rdquo; in 1912. The town had a generally poor socio-economic populace, owing in part to failed efforts to transform itself into a manufacturing and shipping center.</description>
+    </item>
+    
+    <item>
+      <title>Hydra</title>
+      <link>https://crazyyzw.top/projects/hydra/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://crazyyzw.top/projects/hydra/</guid>
+      <description>Motto Cut off one head and two will take their place</description>
+    </item>
+    
+    <item>
+      <title>Tatooine</title>
+      <link>https://crazyyzw.top/projects/tatooine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://crazyyzw.top/projects/tatooine/</guid>
+      <description>A long time ago in a galaxy far, far away&amp;hellip;. A project was planned, but never completed</description>
+    </item>
+    
+  </channel>
+</rss>

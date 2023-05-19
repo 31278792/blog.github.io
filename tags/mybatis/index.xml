@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MyBatis on Yangzw</title>
+    <link>https://crazyyzw.top/tags/mybatis/</link>
+    <description>Recent content in MyBatis on Yangzw</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 15 Apr 2022 18:30:23 +0800</lastBuildDate><atom:link href="https://crazyyzw.top/tags/mybatis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MyBatis介绍及使用</title>
+      <link>https://crazyyzw.top/posts/mybatis/</link>
+      <pubDate>Fri, 15 Apr 2022 18:30:23 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/mybatis/</guid>
+      <description>一、什么是MyBatis？ MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
+1.MyBatis衍生工具 MyBatis-Plus：是一个MyBatis增强工具，在MyBatis的基础上只做增强不做改变，为简化开发、提高效率而生。
+TkMyBatis：是基于 Mybatis 框架开发的一个工具，通过调用它提供的方法实现对单表的数据操作，不需要写任何 sql 语句，这极大地提高了项目开发效率。
+2.MyBatis引入 1.可以通过下载mybatis的jar包置于类路径(classpath)中
+2.单独使用MyBatis加入pom依赖：
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mybatis&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mybatis&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;x.x.x&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 3.集成SpringBoot中pom依赖：
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mybatis.spring.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mybatis-spring-boot-starter&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;x.x.x&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 二、MyBatis使用 简单使用配置可以通过输入流（InputStream）实现：
+String resource = &amp;#34;&amp;lt;mybatis-config.xml的全限定名&amp;gt;&amp;#34;; InputStream inputStream = Resources.getResourceAsStream(resource); SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder.build(inputStream); 也可以通过XML构建SqlSessionFactory：
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;!DOCTYPE configuration PUBLIC &amp;#34;-//mybatis.org//DTD Config 3.0//EN&amp;#34; &amp;#34;http://mybatis.org/dtd/mybatis-3-config.dtd&amp;#34;&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;!--根据需要进行配置--&amp;gt; &amp;lt;/configuration&amp;gt; 不使用XML构建SQLSessionFactory:
+DataSource dataSource = BlogDataSourceFactory.</description>
+    </item>
+    
+  </channel>
+</rss>

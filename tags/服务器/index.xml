@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>服务器 on Yangzw</title>
+    <link>https://crazyyzw.top/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <description>Recent content in 服务器 on Yangzw</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 15 May 2022 21:29:01 +0800</lastBuildDate><atom:link href="https://crazyyzw.top/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>分布式系统介绍</title>
+      <link>https://crazyyzw.top/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Sun, 15 May 2022 21:29:01 +0800</pubDate>
+      
+      <guid>https://crazyyzw.top/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</guid>
+      <description>优点 可靠性、高容错性
+一台服务器的崩溃，不会影响其他服务器，其他服务器仍能提供服务。
+可扩展性
+如果系统服务能力不足，可以水平扩展更多服务器。
+灵活性
+可以很容易安装、实施、扩容和升级系统。
+性能高
+用于多台服务器的计算能力，比单台服务器处理速度更快。
+性价比高
+分布式系统对服务器硬件要求很低，可以选用廉价服务器搭建分布式集群，从而得到更好的性价比。
+缺点 排查难点高
+由于系统分布在多台服务器上，故障排查和问题诊断难度较高。
+软件支持少
+分布式系统解决方案的软件支持较少。
+建设成本高
+需要多台服务器搭建分布式系统。
+综上，分布式提高服务器性能、降低成本，但对于技术门槛偏高
+分布式软件解决方案 分布式锁
+分布式锁是单击锁的一种扩展，主要是为了锁住分布式系统中的物理块或逻辑块，用以此保证不同服务之间的逻辑和数据的一致性。目前，主流的分布式锁实现方式有3种：
+基于数据库实现的分布式锁； 基于Reids实现的分布式锁； 基于Zookeeper实现的分布式锁。 分布式消息
+分布式消息中间件是支持在分布式系统中发送和接受消息的软件基础设施。常见的分布式消息中间件有ActiveMQ、RabbitMQ、Kafka、MetaQ等。
+MetaQ（全称Metamorphosis）是一个高性能、高可用、可扩展的分布式消息中间件，思路起源于LinkedIn的Kafka，但并不是Kafka的一个拷贝。MetaQ具有消息存储顺序写、吞吐量大和支持本地和XA事务等特性，适用于大吞吐量、顺序消息、广播和日志数据 传输等场景。
+数据库分片分组
+针对大数据量的数据库，一般会采用“分片分组”策略
+分片（shard）： 主要解决扩展问题，属于水平拆分。引入分片，就引入了数据路由和分区键的概念。其中，分表解决的是数据量过大的问题，分库解决的是数据库性能瓶颈的问题。 分组（group）： 主要解决可用性问题，通过主从复制的方式实现，并提供读写分离策略用以提高数据库性能。 分布式计算
+分布式计算（Distributed computing）是一种“把需要进行大量运算的工程数据分割成小块，由多台计算机分别计算；在上传运算结果后，将结果统一合并得出数据结论”的科学。
+当前的高性能服务器在处理海量数据时，其计算能力、内存容量等指标都远远无法达到要求。在大数据时代，工程师采用廉价的服务器组成分布式服务集群，以集群协作的方式完成海量数据的处理，从而解决单台服务器在计算与存储上的瓶颈。Hadoop、Storm以及Spark是常用的分布式计算中间件，Hadoop是对非实时数据做批量处理的中间件，Storm和Spark是对实时数据做流式处理的中间件。
+分布式硬件部署方案 单机版部署方案
+单台服务器作为接口服务器同时，同时部署了MySQL数据库、Redis缓存等相关，该架构适用于演示环境、测试环境以及不怕宕机且日PV在5万以内的小型商业应用。
+中小型分布式硬件部署方案
+通过SLB或Nginx组成一个负载均衡的接口服务器集群、MySQL集群、Redis集群，该架构适用于日PV在500万以内的中小型商业应用。
+大型分布式硬件部署方案
+通过SLB/Nginx组成一个负载均衡的接口服务器集群，利用分片分组策略组成一个MySQL数据库集群和Redis缓存集群，该架构适用于日PV在500万以上的大型商业应用。</description>
+    </item>
+    
+  </channel>
+</rss>

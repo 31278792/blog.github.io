@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Quartz使用</title>
+    <meta name="description" content="已識乾坤大，猶憐草木青">
+    <meta name="keywords" content='blog, gokarna, hugo, Java, Quartz, 定时任务'>
+
+    <meta property="og:url" content="https://crazyyzw.top/posts/quartz/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Quartz使用">
+    <meta property="og:description" content="已識乾坤大，猶憐草木青">
+    <meta property="og:image" content="https://crazyyzw.top/images/mona-loading-default.gif">
+    <meta property="og:image:secure_url" content="https://crazyyzw.top/images/mona-loading-default.gif">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quartz使用">
+    <meta name="twitter:description" content="已識乾坤大，猶憐草木青">
+    <meta property="twitter:domain" content="https://crazyyzw.top/posts/quartz/">
+    <meta property="twitter:url" content="https://crazyyzw.top/posts/quartz/">
+    <meta name="twitter:image" content="https://crazyyzw.top/images/mona-loading-default.gif">
+
+    
+    <link rel="canonical" href="https://crazyyzw.top/posts/quartz/" />
+
+    <link rel="stylesheet" type="text/css" href="https://crazyyzw.top/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://crazyyzw.top/css/main.css">
+	<link rel="stylesheet" type="text/css" href="https://crazyyzw.top/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="https://crazyyzw.top/css/cropper.css">
+	<link rel="stylesheet" type="text/css" href="https://crazyyzw.top/css/cube.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://crazyyzw.top/css/dark.css">
+
+    <script src="https://crazyyzw.top/js/svg-injector.min.js"></script>
+    <script src="https://crazyyzw.top/js/feather-icons.min.js"></script>
+    <script src="https://crazyyzw.top/js/main.js"></script>
+	<script src="https://crazyyzw.top/js/cropper.js"></script>
+	<script src="https://crazyyzw.top/js/snowy.js"></script>
+	<script src="https://crazyyzw.top/js/l2dwidget.min.js"></script>
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://crazyyzw.top">
+                <img src="https://crazyyzw.top/images/mona-loading-default.gif" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://crazyyzw.top">Yangzw</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://crazyyzw.top/"><span data-feather='home'></span> 首页 </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://crazyyzw.top/posts/"><span data-feather='book'></span> 归档 </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://crazyyzw.top/tags/"><span data-feather='tag'></span> 标签 </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://crazyyzw.top"><span data-feather='github'></span>  </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://crazyyzw.top/index.xml"><span data-feather='rss'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://crazyyzw.top/"><span data-feather='home'></span> 首页 </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://crazyyzw.top/posts/"><span data-feather='book'></span> 归档 </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://crazyyzw.top/tags/"><span data-feather='tag'></span> 标签 </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://crazyyzw.top"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://crazyyzw.top/index.xml"><span data-feather='rss'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+	<div id="ww_a15bb06dd16cc" v='1.3' loc='auto' a='{"t":"ticker","lang":"zh","sl_lpl":1,"ids":[],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'><a href="https://weatherwidget.org/zh/" id="ww_a15bb06dd16cc_u" target="_blank">天气插件</a></div><script async src="https://app1.weatherwidget.org/js/?id=ww_a15bb06dd16cc"></script>
+	<div class="cube">
+		<div class="picture-outbox">
+			<div class="out-top"><img src="https://source.unsplash.com/50x50/?comics" alt=""></div>
+			<div class="out-bottom"><img src="https://source.unsplash.com/50x50/?cartoon" alt=""></div>
+			<div class="out-left"><img src="https://source.unsplash.com/50x50/?animation" alt=""></div>
+			<div class="out-right"><img src="https://source.unsplash.com/50x50/?Anime" alt=""></div>
+			<div class="out-front"><img src="https://source.unsplash.com/50x50/?anime" alt=""></div>
+			<div class="out-back"><img src="https://source.unsplash.com/50x50/?landscape" alt=""></div>
+		</div>
+	</div>
+</header><main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Quartz使用</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            June 15, 2022
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://crazyyzw.top/tags/java">Java</a></li>
+        
+            <li class="post-tag"><a href="https://crazyyzw.top/tags/quartz">Quartz</a></li>
+        
+            <li class="post-tag"><a href="https://crazyyzw.top/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1">定时任务</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><strong>Quartz是一个开源的作业调度框架，它完全由Java写成，并设计用于J2SE和J2EE应用中。</strong></p>
+<p><a href="https://www.jianshu.com/p/2a5d3b6336ba">参考博客网址</a></p>
+<h2 id="一quartz基本配置">一、Quartz基本配置</h2>
+<p>Quartz三大核心元素：Scheduler(调度器)、Trigger(触发器)、job(任务)。</p>
+<p>通过Scheduler启动Trigger来执行job。</p>
+<p>pom依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!--quartz相关依赖--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.quartz-scheduler<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>quartz<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;version&gt;</span>2.2.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.quartz-scheduler<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>quartz-jobs<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;version&gt;</span>2.2.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    &gt;&gt;&gt;&gt;SpringBoot替换为：&gt;&gt;&gt;&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!--quartz依赖--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-quartz<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>在Quartz JAR文件的org.quartz包下就包含一个quartz.properties属性配置文件并提供了默认属性。如果需要调整默认配置，可以在类路径下建立一个新的quartz.properties，它将自动被Quartz加载并覆盖默认的设置。</p>
+<p>配置信息如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e">#可以为任意字符串，对于scheduler来说此值没有意义，但是可以区分同一系统中多个不同的实例，</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#如果使用了集群的功能，就必须对每一个实例使用相同的名称，这样使这些实例“逻辑上”是同一个scheduler。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.instanceName</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">JobScheduler</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#可以是任意字符串，但如果是集群，scheduler实例的值必须唯一，可以使用AUTO自动生成。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.instanceId</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">AUTO</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.rmi.export</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.rmi.proxy</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 默认false，若是在执行Job之前Quartz开启UserTransaction，此属性应该为true。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Job执行完毕，JobDataMap更新完（如果是StatefulJob）事务就会提交。默认值是false，可以在job类上使用@ExecuteInJTATransaction 注解，以便在各自的job上决定是否开启JTA事务。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.wrapJobExecutionInUserTransaction</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#一个scheduler节点允许接收的trigger的最大数，默认是1，这个值越大，定时任务执行的越多，但代价是集群节点之间的不均衡。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.batchTriggerAcquisitionMaxCount</span><span style="color:#f92672">=</span><span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#线程池的实例类，（一般使用SimpleThreadPool即可满足几乎所有用户的需求）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.threadPool.class</span><span style="color:#f92672">=</span> <span style="color:#e6db74">org.quartz.simpl.SimpleThreadPool</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#线程数量，不会动态增加</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.threadPool.threadCount</span><span style="color:#f92672">=</span> <span style="color:#e6db74">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#线程优先级</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.threadPool.threadPriority</span><span style="color:#f92672">=</span> <span style="color:#e6db74">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#加载任务代码的ClassLoader是否从外部继承</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread</span><span style="color:#f92672">=</span> <span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#是否设置调度器线程为守护线程</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.makeSchedulerThreadDaemon</span><span style="color:#f92672">:</span> <span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将schedule相关信息保存在RAM中，轻量级，速度快，遗憾的是应用重启时相关信息都将丢失。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#最大能忍受的触发超时时间，如果超时则认为“失误”</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.jobStore.misfireThreshold = 60000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#选择JDBC的存储方式 (JobStoreTX为application自己管理事务|JobStoreCMT为application server管理事务，即全局JTA)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.class</span><span style="color:#f92672">=</span> <span style="color:#e6db74">org.quartz.impl.jdbcjobstore.JobStoreTX</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#类似于Hibernate的dialect，用于处理DB之间的差异，StdJDBCDelegate能满足大部分的DB（授权）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.driverDelegateClass</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#存储相关信息表的前缀</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.tablePrefix</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">QRTZ_</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#这个值必须datasource的配置信息</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.dataSource</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">myDS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#JobDataMaps是否都为String类型</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#（若是true的话，便可不用让更复杂的对象以序列化的形式保存到BLOB列中。以防序列化可能导致的版本号问题）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.useProperties</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#最大能忍受的触发超时时间，如果超时则认为“失误”</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.misfireThreshold</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">60000</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#是否是应用在集群中，当应用在集群中时必须设置为TRUE，否则会出错。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#如果有多个Quartz实例在用同一套数据库时，必须设置为true。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.isClustered</span><span style="color:#f92672">=</span><span style="color:#e6db74">False</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#只用于设置了isClustered为true的时候，设置一个频度（毫秒），用于实例报告给集群中的其他实例。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#这会影响到侦测失败实例的敏捷度。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.clusterCheckinInterval</span> <span style="color:#f92672">=</span><span style="color:#e6db74">15000</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#这是JobStore能处理的错过触发的Trigger的最大数量。处理太多（2打）很快就会导致数据库表被锁定够长的时间，</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#这样会妨碍别的（还未错过触发）trigger执行的性能。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.maxMisfiresToHandleAtATime</span><span style="color:#f92672">=</span><span style="color:#e6db74">20</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#设置这个参数为true会告诉Quartz从数据源获取连接后不要调用它的setAutoCommit(false)方法。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#在少数情况下是有用的，比如有一个驱动本来是关闭的，但是又调用这个关闭的方法。但是大部分情况下驱动都要求调用setAutoCommit(false)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.dontSetAutoCommitFalse</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#这必须是一个从LOCKS表查询一行并对这行记录加锁的SQL。假设没有设置，默认值如下。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#{0}会在运行期间被前面配置的TABLE_PREFIX所代替</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.selectWithLockSQL</span><span style="color:#f92672">=</span><span style="color:#e6db74">SELECT * FROM {0}LOCKS WHERE LOCK_NAME = ? FOR UPDATE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#值为true时告知Quartz（当使用JobStoreTX或CMT）调用JDBC连接的setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE) 方法。这有助于某些数据库在高负载和长时间事务时锁的超时。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.txIsolationLevelSerializable</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.dataSource.NAME.driver</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.dataSource.NAME.URL</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.dataSource.NAME.user</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.dataSource.NAME.password</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#org.quartz.dataSource.NAME.maxConnections</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#需要注意的是，#NAME字段必须与$@org.quartz.jobStore.dataSource保持一致。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#一般我们的数据库连接池一般使用第三方连接池，那么就会导致org.quartz.jobStore.dataSource=#NAME无法配置！！可以使用quartz.job-store-type=jdbc替代。</span>
+</span></span></code></pre></div><p>SpringBoot2.x整合Quartz的配置文件如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">datasource</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mysql_test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">com.alibaba.druid.pool.DruidDataSource</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#druid相关配置</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">druid</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#监控统计拦截的filters</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">filter</span>: <span style="color:#ae81ff">stat,config</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#      driver-class-name: com.mysql.cj.jdbc.Driver</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#基本属性</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#ae81ff">jdbc:mysql://localhost:3306/mydb</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">username</span>: <span style="color:#ae81ff">root</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">password</span>: <span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#初始化连接数</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">initial-size</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#最小活跃连接数</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">min-size</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#最大活跃连接数</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">max-active</span>: <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#获取连接的等待时间</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">max-wait</span>: <span style="color:#ae81ff">60000</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#间隔多久进行一次检查，检查需要关闭的空闲连接</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">time-between-eviction-runs-millis</span>: <span style="color:#ae81ff">60000</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#一个连接在池中最小的生存时间(5分钟)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">min-evictable-idle-time-millis</span>: <span style="color:#ae81ff">300000</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">validation-query</span>: <span style="color:#ae81ff">SELECT &#39;X&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 验证空闲的连接，若无法验证，则删除连接</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">test-while-idle</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 不检测池中连接的可用性（默认false）</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 导致的问题是，若项目作为服务端，数据库连接被关闭时，客户端调用就会出现大量的timeout</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">test-on-borrow</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#在返回连接池之前是否验证对象</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">test-on-return</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#第三发连接池在使用的时候，获取到Connection后，使用完毕，调用关闭方法，并没有将Connection关闭，只是放回到连接池中</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#如果调用这个方法，而没有手动关闭PreparedStatement，就可能造成内存溢出，但是JDK1.7实现了AutoCloseable接口，就不需要关闭了</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">pool-prepared-statements</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">max-pool-prepared-statement-per-connection-size</span>: <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># connection-properties:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">use-unfair-lock</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">quartz</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#相关属性配置</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">properties</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">org</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">quartz</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">scheduler</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 集群名，区分同一系统的不同实例，若使用集群功能，则每一个实例都要使用相同的名字</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">instanceName</span>: <span style="color:#ae81ff">clusteredScheduler</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 若是集群下，每个instanceId必须唯一</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">instanceId</span>: <span style="color:#ae81ff">AUTO</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">threadPool</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#一般使用这个便可</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">class</span>: <span style="color:#ae81ff">org.quartz.simpl.SimpleThreadPool</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#线程数量，不会动态增加</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">threadCount</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">threadPriority</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">threadsInheritContextClassLoaderOfInitializingThread</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">jobStore</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#选择JDBC的存储方式</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">class</span>: <span style="color:#ae81ff">org.quartz.impl.jdbcjobstore.JobStoreTX</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">driverDelegateClass</span>: <span style="color:#ae81ff">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">tablePrefix</span>: <span style="color:#ae81ff">QRTZ_</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">useProperties</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">isClustered</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">clusterCheckinInterval</span>: <span style="color:#ae81ff">15000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">job-store-type</span>: <span style="color:#ae81ff">jdbc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Quartz默认false，是否等待任务运行完毕后关闭Spring容器，若是为false的情况下，可能出现java.lang.IllegalStateException: JobStore is shutdown - aborting retry异常，推荐开启。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">wait-for-jobs-to-complete-on-shutdown</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#是否会覆盖数据库正在运行的job。quartz启动之后，会以数据库的为准，若该属性为false，则配置文件修改后不会起作用。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">overwrite-existing-jobs</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><h2 id="二jobstore数据库表字段详解">二、jobstore数据库表字段详解</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#75715e"># In your Quartz properties file, you&#39;ll need to set
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># By: Ron Cordell - roncordell
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#  I didn&#39;t see this anywhere, so I thought I&#39;d post it here. This is the script from Quartz to create the tables in a MySQL database, modified to use INNODB instead of MYISAM.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_FIRED_TRIGGERS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_PAUSED_TRIGGER_GRPS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_SCHEDULER_STATE;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_LOCKS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_SIMPLE_TRIGGERS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_SIMPROP_TRIGGERS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_CRON_TRIGGERS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_BLOB_TRIGGERS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_TRIGGERS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_JOB_DETAILS;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> QRTZ_CALENDARS;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_JOB_DETAILS</span>(
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>DESCRIPTION <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">250</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_CLASS_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">250</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>IS_DURABLE <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>IS_NONCONCURRENT <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>IS_UPDATE_DATA <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>REQUESTS_RECOVERY <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_DATA <span style="color:#66d9ef">BLOB</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,JOB_NAME,JOB_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>DESCRIPTION <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">250</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>NEXT_FIRE_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>PREV_FIRE_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>PRIORITY <span style="color:#66d9ef">INTEGER</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_STATE <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">16</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_TYPE <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">8</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>START_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>END_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>CALENDAR_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>MISFIRE_INSTR <span style="color:#66d9ef">SMALLINT</span>(<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_DATA <span style="color:#66d9ef">BLOB</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,JOB_NAME,JOB_GROUP)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">REFERENCES</span> <span style="color:#a6e22e">QRTZ_JOB_DETAILS</span>(SCHED_NAME,JOB_NAME,JOB_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_SIMPLE_TRIGGERS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>REPEAT_COUNT <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">7</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>REPEAT_INTERVAL <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">12</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TIMES_TRIGGERED <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">REFERENCES</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_CRON_TRIGGERS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>CRON_EXPRESSION <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TIME_ZONE_ID <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">80</span>),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">REFERENCES</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_SIMPROP_TRIGGERS</span>
+</span></span><span style="display:flex;"><span>  (
+</span></span><span style="display:flex;"><span>    SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    TRIGGER_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    STR_PROP_1 <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    STR_PROP_2 <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    STR_PROP_3 <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">512</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    INT_PROP_1 <span style="color:#66d9ef">INT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    INT_PROP_2 <span style="color:#66d9ef">INT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    LONG_PROP_1 <span style="color:#66d9ef">BIGINT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    LONG_PROP_2 <span style="color:#66d9ef">BIGINT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    DEC_PROP_1 <span style="color:#66d9ef">NUMERIC</span>(<span style="color:#ae81ff">13</span>,<span style="color:#ae81ff">4</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    DEC_PROP_2 <span style="color:#66d9ef">NUMERIC</span>(<span style="color:#ae81ff">13</span>,<span style="color:#ae81ff">4</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    BOOL_PROP_1 <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    BOOL_PROP_2 <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">REFERENCES</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_BLOB_TRIGGERS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>BLOB_DATA <span style="color:#66d9ef">BLOB</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">INDEX</span> (SCHED_NAME,TRIGGER_NAME, TRIGGER_GROUP),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">REFERENCES</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_CALENDARS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>CALENDAR_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>CALENDAR <span style="color:#66d9ef">BLOB</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,CALENDAR_NAME))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_PAUSED_TRIGGER_GRPS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,TRIGGER_GROUP))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>ENTRY_ID <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">95</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>TRIGGER_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>INSTANCE_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>FIRED_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>SCHED_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>PRIORITY <span style="color:#66d9ef">INTEGER</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>STATE <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">16</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>JOB_GROUP <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>IS_NONCONCURRENT <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>REQUESTS_RECOVERY <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,ENTRY_ID))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_SCHEDULER_STATE</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>INSTANCE_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>LAST_CHECKIN_TIME <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>CHECKIN_INTERVAL <span style="color:#66d9ef">BIGINT</span>(<span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,INSTANCE_NAME))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">QRTZ_LOCKS</span> (
+</span></span><span style="display:flex;"><span>SCHED_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">120</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>LOCK_NAME <span style="color:#66d9ef">VARCHAR</span>(<span style="color:#ae81ff">40</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (SCHED_NAME,LOCK_NAME))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_J_REQ_RECOVERY <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_JOB_DETAILS</span>(SCHED_NAME,REQUESTS_RECOVERY);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_J_GRP <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_JOB_DETAILS</span>(SCHED_NAME,JOB_GROUP);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_J <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,JOB_NAME,JOB_GROUP);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_JG <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,JOB_GROUP);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_C <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,CALENDAR_NAME);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_G <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_GROUP);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_STATE <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_STATE);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_N_STATE <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_N_G_STATE <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_NEXT_FIRE_TIME <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,NEXT_FIRE_TIME);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_NFT_ST <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_NFT_MISFIRE <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_NFT_ST_MISFIRE <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_T_NFT_ST_MISFIRE_GRP <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_TRIGGERS</span>(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_FT_TRIG_INST_NAME <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span>(SCHED_NAME,INSTANCE_NAME);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_FT_INST_JOB_REQ_RCVRY <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span>(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_FT_J_G <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span>(SCHED_NAME,JOB_NAME,JOB_GROUP);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_FT_JG <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span>(SCHED_NAME,JOB_GROUP);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_FT_T_G <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span>(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> IDX_QRTZ_FT_TG <span style="color:#66d9ef">ON</span> <span style="color:#a6e22e">QRTZ_FIRED_TRIGGERS</span>(SCHED_NAME,TRIGGER_GROUP);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>commit;
+</span></span></code></pre></div><p><strong>上面总共11张表，是Quartz官方提供，默认存储scheduler表</strong></p>
+<blockquote>
+<p><!-- raw HTML omitted -->1.qrtz_job_details：存储每一个已配置的job的详细信息<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->2.qrtz_triggers：存放配置的Trigger信息<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->3.qrtz_cron_triggers：存放cron类型的触发器<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->4.qrtz_scheduler_state：存储所有节点的scheduler，会定期检查scheduler是否失效<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->5.qrtz_fired_triggers：存储已经触发的trigger相关信息，trigger随着时间的推移状态发生变化，直到最后trigger执行完成，从表中被删除<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->6.qrtz_simple_triggers：存储简单的trigger，包括重复次数，间隔，以及触发次数<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->7.qrtz_simprop_triggers：存储CalendarIntervalTrigger和DailyTimeIntervalTrigger两种类型的触发器<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->8.qrtz_blob_triggers：将自定义的triggers使用blog类型进行存储，非自定义的triggers不会存放在此表中，Quartz提供的triggers包括：CronTrigger，CalendarIntervalTrigger，DailyTimeIntervalTrigger以及SimpleTrigger<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->9.qrtz_calendars：以Blob类型存储Quartz的Calendar信息<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->10.存储已暂停的Trigger组的信息<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->11.存储程序的悲观锁的信息<!-- raw HTML omitted --></p>
+</blockquote>
+<h2 id="三任务的并行串行执行">三、任务的并行/串行执行</h2>
+<p>Spring提供的两种配置JobDetail的方式，官方示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- JobDetail配置 1 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;exampleJob&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.scheduling.quartz.JobDetailFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;jobClass&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;example.ExampleJob&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;jobDataAsMap&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;map&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;entry</span> <span style="color:#a6e22e">key=</span><span style="color:#e6db74">&#34;timeout&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;5&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/map&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- JobDetail配置 2 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;jobDetail&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;targetObject&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;exampleBusinessObject&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;targetMethod&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;doIt&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;concurrent&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span> <span style="color:#75715e">/**配置 1*/</span>
+</span></span><span style="display:flex;"><span> JobDetailFactoryBean jobFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JobDetailFactoryBean<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>jobName<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setBeanName</span><span style="color:#f92672">(</span>clazzName<span style="color:#f92672">);</span>  <span style="color:#75715e">//包名+类名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setJobClass</span><span style="color:#f92672">((</span>Class<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Job<span style="color:#f92672">&gt;)</span> aClass<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setGroup</span><span style="color:#f92672">(</span>jobGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setDurability</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">afterPropertiesSet</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">/**配置 2*/</span>
+</span></span><span style="display:flex;"><span> MethodInvokingJobDetailFactoryBean invokingJobDetailFactoryBean<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span>  MethodInvokingJobDetailFactoryBean<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span> invokingJobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setConcurrent</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> invokingJobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>jobName<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> invokingJobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setGroup</span><span style="color:#f92672">(</span>jobGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> invokingJobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setTargetClass</span><span style="color:#f92672">(</span>aClass<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> invokingJobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setTargetMethod</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;xxx&#34;</span><span style="color:#f92672">);</span>
+</span></span></code></pre></div><h3 id="1jobdetailfactorybean方式配置">1.JobDetailFactoryBean方式配置</h3>
+<p>首先，需要配置jobClass属性，jobClass需要传入一个job实现类。Spring推荐直接继承QuartzJobBean类，官方示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> example<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExampleJob</span> <span style="color:#66d9ef">extends</span> QuartzJobBean <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> timeout<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Setter called after the ExampleJob is instantiated
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * with the value from the JobDetailFactoryBean (5)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setTimeout</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> timeout<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">timeout</span> <span style="color:#f92672">=</span> timeout<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">executeInternal</span><span style="color:#f92672">(</span>JobExecutionContext ctx<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> JobExecutionException<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// do the actual work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>在executeInternal()中进行实现，其次是配置jobDataAsMap的属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;entry</span> <span style="color:#a6e22e">key=</span><span style="color:#e6db74">&#34;timeout&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;5&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>只要继承QuartzJobBean，就可以通过这种方式直接向Job属性中传递值。</p>
+<h3 id="2配置trigger和scheduler">2.配置Trigger和Scheduler</h3>
+<p>Quartz中常用的Trigger只有两种：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- trigger 1 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;simpleTrigger&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.scheduling.quartz.SimpleTriggerFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- see the example of method invoking job above --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;jobDetail&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;jobDetail&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 10 seconds --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;startDelay&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;10000&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- repeat every 50 seconds --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;repeatInterval&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;50000&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- trigger 2 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;cronTrigger&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.scheduling.quartz.CronTriggerFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;jobDetail&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;exampleJob&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- run every morning at 6 AM --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;cronExpression&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;0 0 6 * * ?&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span> CronTriggerFactoryBean triggerFactoryBean <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CronTriggerFactoryBean<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;corn_&#34;</span> <span style="color:#f92672">+</span> clazzName<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">//jobDetails
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setJobDetail</span><span style="color:#f92672">(</span>jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getObject</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setCronExpression</span><span style="color:#f92672">(</span>quartzCorn<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setGroup</span><span style="color:#f92672">(</span>QUARTZ_TRIGGER_GROUP<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">afterPropertiesSet</span><span style="color:#f92672">();</span>
+</span></span></code></pre></div><ul>
+<li>simpleTrigger触发器每隔一段时间执行一次任务，jobDetail就是前面生成的jobDetail；startDelay表示系统启动起来后过多长时间开始执行任务，单位：毫秒；repeatInterval表示任务执行时间间隔，单位毫秒</li>
+<li>cornTrigger是cron表达式来执行的定时任务。</li>
+</ul>
+<p>分别记录在qrtz_cron_triggers | qrtz_simple_triggers &amp; qrtz_triggers表中</p>
+<h3 id="3quartz串行设置">3.Quartz串行设置</h3>
+<p>在<strong>MethodInvokingJobDetailFactoryBean</strong>中，含有一个<strong>concurrent</strong>属性，可以用来控制任务是否并行执行。但在<strong>JobDetailFactoryBean</strong>中并没有这个属性。并且由于<strong>MethodInvokingJobDetailFactoryBean</strong>功能差，在实际开发中使用的并不多。所以，如何防止<strong>JobDetailFactoryBean</strong>并行呢？代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> example<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//只需要在Job类上加上这个注解即可
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">@DisallowConcurrentExecution</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExampleJob</span> <span style="color:#66d9ef">extends</span> QuartzJobBean <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> timeout<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Setter called after the ExampleJob is instantiated
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * with the value from the JobDetailFactoryBean (5)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setTimeout</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> timeout<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">timeout</span> <span style="color:#f92672">=</span> timeout<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">executeInternal</span><span style="color:#f92672">(</span>JobExecutionContext ctx<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> JobExecutionException<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// do the actual work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="四misfire处理机制">四、misfire处理机制</h2>
+<p>在Quartz中，当一个持久化的触发器因为调度器被关闭、线程池没有可用线程、项目重启、任务的串行执行等错过激活时间，就会发生激活失败（misfire）。</p>
+<h3 id="1如何判定激活失败">1.如何判定激活失败</h3>
+<p>在配置文件中有一个misfireThreshold属性，用来指定调度引擎设置触发器超时的“临界值”。也就是说Quartz对于任务的超时是有容忍度的。只有超过这个容忍度才会判定位misfire。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e">#设置容忍度为12s</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.misfireThreshold</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">12000</span>
+</span></span></code></pre></div><p><strong>示例：</strong></p>
+<p><code>Cron=[0/2 * * * * ?]</code>即每两秒循环一次</p>
+<p>jobDetail每次执行需要7s</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@DisallowConcurrentExecution</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestJob2</span> <span style="color:#66d9ef">extends</span>  CustomQuartzJobBean<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Logger logger <span style="color:#f92672">=</span> LoggerFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getLogger</span><span style="color:#f92672">(</span>TestJob2<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">executeInternal</span><span style="color:#f92672">(</span>JobExecutionContext ctx<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> JobExecutionException<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;【数据库配置定时】-【开始】&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span><span style="color:#ae81ff">7000</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;【数据库配置定时】-【结束】&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th style="text-align:center">任务编号</th>
+<th style="text-align:center">预定运行时刻</th>
+<th style="text-align:center">实际运行时刻</th>
+<th style="text-align:center">延迟量（秒）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">17:54:00</td>
+<td style="text-align:center">17:54:00</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">17:54:02</td>
+<td style="text-align:center">17:54:07</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">17:54:04</td>
+<td style="text-align:center">17:54:14</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">17:54:06</td>
+<td style="text-align:center">17:54:21</td>
+<td style="text-align:center">misfire</td>
+</tr>
+</tbody>
+</table>
+<p>从上面案例可以看出，每次延迟为5秒，当延迟累加超过设定的容忍度12s时，将不会执行。</p>
+<h3 id="2激活失败如何处理">2.激活失败如何处理</h3>
+<p>激活失败指令是触发器的一个重要配置，所有类型的触发器都有一个默认配置的指令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Trigger<span style="color:#f92672">.</span><span style="color:#a6e22e">MISFIRE_INSTRUCTION_SMART_POLICY</span>
+</span></span></code></pre></div><p>但该默认策略对于不同类型的触发器其具体行为是不同的。源码常量有以下几个：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 所有的misfile任务马上执行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 在Trigger中默认选择MISFIRE_INSTRUCTION_FIRE_ONCE_NOW 策略
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_SMART_POLICY <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// CornTrigger默认策略，合并部分misfire，正常执行下一个周期的任务。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_FIRE_ONCE_NOW <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 所有的misFire都不管，执行下一个周期的任务。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_DO_NOTHING <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">;</span>
+</span></span></code></pre></div><h4 id="1-quartz中crontrigger使用的策略">1) quartz中CronTrigger使用的策略</h4>
+<p>通过setMisfireInstruction方法设置misfire策略或者通过CronScheduleBuilder设置misfire策略</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span> CronTriggerFactoryBean triggerFactoryBean <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CronTriggerFactoryBean<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;corn_&#34;</span> <span style="color:#f92672">+</span> clazzName<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setJobDetail</span><span style="color:#f92672">(</span>jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getObject</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setCronExpression</span><span style="color:#f92672">(</span>quartzCorn<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setGroup</span><span style="color:#f92672">(</span>QUARTZ_TRIGGER_GROUP<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">//设置misfire策略
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setMisfireInstruction</span><span style="color:#f92672">(</span>CronTrigger<span style="color:#f92672">.</span><span style="color:#a6e22e">MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span> triggerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">afterPropertiesSet</span><span style="color:#f92672">();</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span> CronScheduleBuilder csb <span style="color:#f92672">=</span> CronScheduleBuilder.cronSchedule(<span style="color:#e6db74">&#34;0/5 * * * * ?&#34;</span>);
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">//MISFIRE_INSTRUCTION_DO_NOTHING
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> csb.withMisfireHandlingInstructionDoNothing();
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">//MISFIRE_INSTRUCTION_FIRE_ONCE_NOW
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> csb.withMisfireHandlingInstructionFireAndProceed();<span style="color:#75715e">//(默认)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#75715e">//MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> csb.withMisfireHandlingInstructionIgnoreMisfires();
+</span></span></code></pre></div><p>举例说明：</p>
+<p>设置背景：在每个星期周一下午5点到7点，每隔一个小时执行一次，理论上共执行3次</p>
+<p>1.情景一：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">//所有misfire的任务会马上执行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">;</span>
+</span></span></code></pre></div><p>若是5点misfire，6:15系统恢复之后，5,6点的misfire会马上执行。</p>
+<p>2.情景二：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">//不做任何事情
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_DO_NOTHING <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">;</span>
+</span></span></code></pre></div><p>若是5点misfire，6:15系统恢复之后，只会执行7点的misfire。</p>
+<p>3.情景三：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// CornTrigger默认策略，合并部分misfire，正常执行下一个周期的任务。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MISFIRE_INSTRUCTION_FIRE_ONCE_NOW <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">;</span>
+</span></span></code></pre></div><p>若是5点misfire，6:15系统恢复之后，立即执行一次（只会一次）misfire。</p>
+<h4 id="2-quartz中simpletrigger使用的策略">2) quartz中SimpleTrigger使用的策略</h4>
+<p>若是使用默认策略<code>MISFIRE_INSTRUCTION_SMART_POLICY</code>，</p>
+<ul>
+<li>
+<p>如果Repeat=0;【重复0次】</p>
+<p>instruction selected = MISFIRE_INSTRUCTION_FIRE_NOW;【立刻执行，对于不会重复执行的任务，只是默认的处理策略。】</p>
+</li>
+<li>
+<p>如果Repeat Count=REPEAT_INDEFINITELY;【无限重复】</p>
+<p>instruction selected = MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT;【在下一个激活点执行，且错过的执行机会作废。】</p>
+</li>
+<li>
+<p>如果Repeat Count&gt;0;【有限重复】</p>
+</li>
+<li>
+<p>instruction selected = MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_EXISTING_REPEAT_COUNT;【立即执行，并执行指定的次数。】</p>
+</li>
+</ul>
+<h4 id="3-misfire执行流程">3) misfire执行流程</h4>
+<ol>
+<li>若配置（默认为true，可配置）成获取锁前先检查是否有需要recovery的trigger，先获取misfireCount；</li>
+<li>获取TRIGGER_ACCESS锁；</li>
+<li>misfired的判断依据：status=waiting，current_time-next_fire_time&gt;misfireThreshold（可配置，默认1分钟）【即实际触发时间-预计触发时间大于容忍度时间】，获取misfired的trigger，默认一个事务中只能最大有20个misfired trigger（可配置）。</li>
+<li>updateAfterMisfired：获取misfired的策略（默认是MISFIRE_INSTRUCTION_SMART_POLICY该策略在CronTrigger中为MISFIRE_INSTRUCTION_FIRE_ONCE_NOW），根据策略更新nexFireTime。</li>
+<li>将nextFireTime等更新到trigger表；</li>
+<li>commit connection，释放锁。</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/16013479-4518b810a25f3f02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<h2 id="五trigger状态转换">五、Trigger状态转换</h2>
+<p>Trigger对应数据库表为qrtz_triggers和qrtz_fired_triggers</p>
+<h3 id="1正常获取触发任务执行流程">1.正常获取触发任务执行流程</h3>
+<p>一个触发器只能绑定一个job，但是一个job可以有多个触发器。</p>
+<p>触发器线程执行开始时，先从数据库表中获取状态为waiting和要要触发的trigger，然后waiting(等待)状态将更新位acquired(获得)，表示该触发器线程抢占到了。然后插入触发器信息以及实例名到FRIED_TRIGGERS表中，状态为ACQUIRED。前面的更新和后面的插入是在同一个事务中进行的。</p>
+<p>然后等待触发时间的到来。</p>
+<p>执行时间到达后，每触发一次任务，都会在数据库对应表中创建一条记录，并且状态变为executing(执行)。如果任务运行并发执行，此时表状态更新为waiting、paused(暂停)、complete(不需要执行)。</p>
+<p>如果任务不允许并发执行，还会把Triggers表里的状态更新为BLOCK(阻塞)或PAUSED_BLOCK。</p>
+<p><em>注意：Triggers表更新时根据任务名和任务所属组名而不是根据触发器名称和触发器组名来更新的。这就解决了一个任务有多个触发器的并发问题；然后触发器线程会创建一个执行环境来执行任务，以便在任务执行完后更新触发器的状态。任务执行完成后，在一个事务中触发器状态更新为waiting，删除qrtz_fired_triggers表里对应的记录。</em></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/16013479-1f386654c3d2ee1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1115/format/webp" alt="img"></p>
+<h3 id="2如何避免多个节点执行同一个任务">2.如何避免多个节点执行同一个任务</h3>
+<p>在qrtz_trigger表中有NEXT_FIRE_TIME字段（下一次触发时间）。每个任务在即将执行的时候，获取qrtz_locks表中的行级锁，开启一个事务（更新qrtz_trigger表状态为acquired，并且插入qrtz_fire_trigger一条数据，起始状态为acquired）。</p>
+<h2 id="六quartz集群">六、Quartz集群</h2>
+<p>配置文件如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e">#集群中应用采用相同的Scheduler实例</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.instanceName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">wenqyScheduler</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#集群节点的ID必须唯一，可由quartz自动生成</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.scheduler.instanceId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">AUTO</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#通知Scheduler实例要它参与到一个集群当中</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.isClustered</span><span style="color:#f92672">:</span> <span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#需持久化存储</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.class</span><span style="color:#f92672">=</span><span style="color:#e6db74">org.quartz.impl.jdbcjobstore.JobStoreTX</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.driverDelegateClass</span><span style="color:#f92672">=</span><span style="color:#e6db74">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#数据源</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.dataSource</span><span style="color:#f92672">=</span><span style="color:#e6db74">myDS</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#quartz表前缀</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.jobStore.tablePrefix</span><span style="color:#f92672">=</span><span style="color:#e6db74">QRTZ_</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#数据源配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.dataSource.myDS.driver</span><span style="color:#f92672">:</span> <span style="color:#e6db74">com.mysql.jdbc.Driver</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.dataSource.myDS.URL</span><span style="color:#f92672">:</span> <span style="color:#e6db74">jdbc:mysql://localhost:3306/ncdb</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.dataSource.myDS.user</span><span style="color:#f92672">:</span> <span style="color:#e6db74">root</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.dataSource.myDS.password</span><span style="color:#f92672">:</span> <span style="color:#e6db74">123456</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.dataSource.myDS.maxConnections</span><span style="color:#f92672">:</span> <span style="color:#e6db74">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">org.quartz.dataSource.myDS.validationQuery</span><span style="color:#f92672">:</span> <span style="color:#e6db74">select 0</span>
+</span></span></code></pre></div><p>同一集群下，instanceName必须相同，instanceId可自动生成，isClustered为true，持久化存储，指定数据库类型对应的驱动类和数据库连接。</p>
+<h2 id="七quartz异步通知">七、Quartz异步通知</h2>
+<p><strong>一个Trigger只能绑定一个job，但是一个job可以绑定多个Trigger</strong></p>
+<p>若我们将一个job上绑定多个触发器，且每个触发器只是触发一次的话，那么，实际上我们便可以实现阶梯式的异步通知。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestQuartzForMoreJob</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Logger logger<span style="color:#f92672">=</span>LoggerFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getLogger</span><span style="color:#f92672">(</span>TestQuartzForMoreJob<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        SimpleScheduleBuilder scheduleBuilder1<span style="color:#f92672">=</span>SimpleScheduleBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">repeatSecondlyForTotalCount</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        JobDetail jobDetail <span style="color:#f92672">=</span> JobBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">newJob</span><span style="color:#f92672">(</span>HelloQuartz<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withIdentity</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;job1&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;job_group1&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">storeDurably</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        SimpleDateFormat sdf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SimpleDateFormat<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;yyyy-MM-dd hh:mm:ss&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Date date <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Date<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        Date date1 <span style="color:#f92672">=</span> addSecond<span style="color:#f92672">(</span>date<span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Date date2 <span style="color:#f92672">=</span> addSecond<span style="color:#f92672">(</span>date<span style="color:#f92672">,</span> <span style="color:#ae81ff">15</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//日志打印
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;获取到任务的时间:&#34;</span><span style="color:#f92672">+</span>sdf<span style="color:#f92672">.</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span>date<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;第一次通知的时间:&#34;</span><span style="color:#f92672">+</span>sdf<span style="color:#f92672">.</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span>date1<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;第二次通知的时间:&#34;</span><span style="color:#f92672">+</span>sdf<span style="color:#f92672">.</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span>date2<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//触发器1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SimpleTrigger trigger <span style="color:#f92672">=</span> newTrigger<span style="color:#f92672">().</span><span style="color:#a6e22e">withIdentity</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;trigger1&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;group1&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withSchedule</span><span style="color:#f92672">(</span>scheduleBuilder1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">startAt</span><span style="color:#f92672">(</span>date1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">forJob</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> JobKey<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;job1&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;job_group1&#34;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//触发器2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SimpleTrigger trigger2 <span style="color:#f92672">=</span> newTrigger<span style="color:#f92672">().</span><span style="color:#a6e22e">withIdentity</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;trigger2&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;group1&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withSchedule</span><span style="color:#f92672">(</span>scheduleBuilder1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">forJob</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> JobKey<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;job1&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;job_group1&#34;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">startAt</span><span style="color:#f92672">(</span>date2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            Scheduler scheduler <span style="color:#f92672">=</span> StdSchedulerFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getDefaultScheduler</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//多触发器关联
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">scheduleJob</span><span style="color:#f92672">(</span>jobDetail<span style="color:#f92672">,</span> trigger<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">scheduleJob</span><span style="color:#f92672">(</span>trigger2<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span><span style="color:#ae81ff">100000</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">shutdown</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SchedulerException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Date <span style="color:#a6e22e">addSecond</span><span style="color:#f92672">(</span>Date date<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> second<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        java<span style="color:#f92672">.</span><span style="color:#a6e22e">util</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Calendar</span> calendar <span style="color:#f92672">=</span> java<span style="color:#f92672">.</span><span style="color:#a6e22e">util</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Calendar</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getInstance</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        calendar<span style="color:#f92672">.</span><span style="color:#a6e22e">setTime</span><span style="color:#f92672">(</span>date<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//        calendar.add(Calendar.MINUTE, minute);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        calendar<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>Calendar<span style="color:#f92672">.</span><span style="color:#a6e22e">SECOND</span><span style="color:#f92672">,</span> second<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> calendar<span style="color:#f92672">.</span><span style="color:#a6e22e">getTime</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>将器持久化至轮询数据库，数据库表结构如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>yy_notify<span style="color:#f92672">`</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>TXN_ID<span style="color:#f92672">`</span> <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">32</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> COMMENT <span style="color:#e6db74">&#39;系统单号&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>SERVICE_ID<span style="color:#f92672">`</span> <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> COMMENT <span style="color:#e6db74">&#39;Spring Bean id&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>SCAN_STATUS<span style="color:#f92672">`</span> <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span> COMMENT <span style="color:#e6db74">&#39;扫描状态（00：待扫描，01：不扫描）&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>SCAN_TIMES<span style="color:#f92672">`</span> <span style="color:#66d9ef">int</span>(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;0&#39;</span> COMMENT <span style="color:#e6db74">&#39;扫描次数&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>NEXT_SCAN_TIME<span style="color:#f92672">`</span> <span style="color:#66d9ef">timestamp</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span> COMMENT <span style="color:#e6db74">&#39;下次扫描时间，用于梯度查询场景&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>NOTIFY_STATUS<span style="color:#f92672">`</span> <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span> COMMENT <span style="color:#e6db74">&#39;(02-通知成功，03-通知返回失败，01-未通知)&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>CREATE_TIME<span style="color:#f92672">`</span> <span style="color:#66d9ef">timestamp</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> COMMENT <span style="color:#e6db74">&#39;创建时间&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>MODIFY_TIME<span style="color:#f92672">`</span> <span style="color:#66d9ef">timestamp</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">UPDATE</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span> COMMENT <span style="color:#e6db74">&#39;修改时间&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>TXN_ID<span style="color:#f92672">`</span>) <span style="color:#66d9ef">USING</span> BTREE,
+</span></span><span style="display:flex;"><span>) <span style="color:#66d9ef">ENGINE</span><span style="color:#f92672">=</span>InnoDB <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CHARSET</span><span style="color:#f92672">=</span>utf8;
+</span></span></code></pre></div><h2 id="八动态操作定时任务">八、动态操作定时任务</h2>
+<p>方法一：JobDetailFactoryBean或者CronTriggerFactoryBean构建</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>    <span style="color:#75715e">/**第一种写法*/</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> JobDetailFactoryBean <span style="color:#a6e22e">jobDetail</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//查询数据库或者配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        JobDetailFactoryBean jobDetailFactoryBean<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> JobDetailFactoryBean<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        jobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        jobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setBeanName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        jobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setJobClass</span><span style="color:#f92672">((</span>Class<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Job<span style="color:#f92672">&gt;)</span> aClass<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        jobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setGroup</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        jobDetailFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">setDurability</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> jobDetailFactoryBean<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/**第二种写法*/</span>
+</span></span><span style="display:flex;"><span>    JobDetailFactoryBean jobFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JobDetailFactoryBean<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setBeanName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setJobClass</span><span style="color:#f92672">((</span>Class<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Job<span style="color:#f92672">&gt;)</span> aClass<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setGroup</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">setDurability</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">afterPropertiesSet</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//完成JobDetail的创建
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    JobDetail jobDetail<span style="color:#f92672">=</span> jobFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getObject</span><span style="color:#f92672">();</span>
+</span></span></code></pre></div><p>方法二：使用建筑者模式创建job或者trigger</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>    <span style="color:#75715e">//创建Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">JobDetail</span> <span style="color:#a6e22e">getJobDetail</span>(<span style="color:#a6e22e">JobKey</span> <span style="color:#a6e22e">jobKey</span>, String <span style="color:#a6e22e">description</span>, <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">jobShouldRecover</span>, <span style="color:#a6e22e">JobDataMap</span> <span style="color:#a6e22e">jobDataMap</span>, <span style="color:#a6e22e">Class</span><span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Job</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">jobClass</span>) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">JobBuilder</span>.<span style="color:#a6e22e">newJob</span>(<span style="color:#a6e22e">jobClass</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">withIdentity</span>(<span style="color:#a6e22e">jobKey</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">withDescription</span>(<span style="color:#a6e22e">description</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">setJobData</span>(<span style="color:#a6e22e">jobDataMap</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">usingJobData</span>(<span style="color:#a6e22e">jobDataMap</span>)   <span style="color:#75715e">//设置JobDataMap字段
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                .<span style="color:#a6e22e">requestRecovery</span>(<span style="color:#a6e22e">jobShouldRecover</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">storeDurably</span>()  <span style="color:#75715e">//表示当没有触发器与之关联时，仍然将job继续保存在Scheduler中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//创建Trigger
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">Trigger</span> <span style="color:#a6e22e">getCornTrigger</span>(<span style="color:#a6e22e">TriggerKey</span> <span style="color:#a6e22e">triggerKey</span>, String <span style="color:#a6e22e">description</span>, <span style="color:#a6e22e">JobDataMap</span> <span style="color:#a6e22e">jobDataMap</span>, String <span style="color:#a6e22e">cronExpression</span>, <span style="color:#a6e22e">JobKey</span> <span style="color:#a6e22e">jobKey</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">TriggerBuilder</span>.<span style="color:#a6e22e">newTrigger</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">withIdentity</span>(<span style="color:#a6e22e">triggerKey</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">withDescription</span>(<span style="color:#a6e22e">description</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">withSchedule</span>(<span style="color:#a6e22e">CronScheduleBuilder</span>.<span style="color:#a6e22e">cronSchedule</span>(<span style="color:#a6e22e">cronExpression</span>))
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">forJob</span>(<span style="color:#a6e22e">jobKey</span>.<span style="color:#a6e22e">getName</span>(), <span style="color:#a6e22e">jobKey</span>.<span style="color:#a6e22e">getGroup</span>()) <span style="color:#75715e">//制定Trigger和Job的关联关系
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                .<span style="color:#a6e22e">usingJobData</span>(<span style="color:#a6e22e">jobDataMap</span>)  <span style="color:#75715e">//具体执行的方法中可以拿到这个传进去的信息。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><h3 id="1任务进行动态处理">1.任务进行动态处理</h3>
+<p>首先我们需要在项目启动完毕时，去加载自定义定时配置表的配置，动态的去创建任务。那么需要实现CommandLineRunner/ApplicationRunner接口。动态操作定时任务本质是对scheduler调用，然后根据自身业务进行扩展。代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by EalenXie on 2019/7/10 13:49.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 核心其实就是Scheduler的功能 , 这里只是非常简单的示例说明其功能
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 如需根据自身业务进行扩展 请参考 {@link org.quartz.Scheduler}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QuartzJobService</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Quartz定时任务核心的功能实现类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Scheduler scheduler<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">QuartzJobService</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Autowired</span> SchedulerFactoryBean schedulerFactoryBean<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        scheduler <span style="color:#f92672">=</span> schedulerFactoryBean<span style="color:#f92672">.</span><span style="color:#a6e22e">getScheduler</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 创建和启动 定时任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * {@link org.quartz.Scheduler#scheduleJob(JobDetail, Trigger)}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param define 定时任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">scheduleJob</span><span style="color:#f92672">(</span>TaskDefine define<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> SchedulerException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//1.定时任务 的 名字和组名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        JobKey jobKey <span style="color:#f92672">=</span> define<span style="color:#f92672">.</span><span style="color:#a6e22e">getJobKey</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//2.定时任务 的 元数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        JobDataMap jobDataMap <span style="color:#f92672">=</span> getJobDataMap<span style="color:#f92672">(</span>define<span style="color:#f92672">.</span><span style="color:#a6e22e">getJobDataMap</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//3.定时任务 的 描述
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        String description <span style="color:#f92672">=</span> define<span style="color:#f92672">.</span><span style="color:#a6e22e">getDescription</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//4.定时任务 的 逻辑实现类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        Class<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Job<span style="color:#f92672">&gt;</span> jobClass <span style="color:#f92672">=</span> define<span style="color:#f92672">.</span><span style="color:#a6e22e">getJobClass</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//5.定时任务 的 cron表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        String cron <span style="color:#f92672">=</span> define<span style="color:#f92672">.</span><span style="color:#a6e22e">getCronExpression</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        JobDetail jobDetail <span style="color:#f92672">=</span> getJobDetail<span style="color:#f92672">(</span>jobKey<span style="color:#f92672">,</span> description<span style="color:#f92672">,</span> jobDataMap<span style="color:#f92672">,</span> jobClass<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Trigger trigger <span style="color:#f92672">=</span> getTrigger<span style="color:#f92672">(</span>jobKey<span style="color:#f92672">,</span> description<span style="color:#f92672">,</span> jobDataMap<span style="color:#f92672">,</span> cron<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">scheduleJob</span><span style="color:#f92672">(</span>jobDetail<span style="color:#f92672">,</span> trigger<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 暂停Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * {@link org.quartz.Scheduler#pauseJob(JobKey)}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pauseJob</span><span style="color:#f92672">(</span>JobKey jobKey<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> SchedulerException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">pauseJob</span><span style="color:#f92672">(</span>jobKey<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 恢复Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * {@link org.quartz.Scheduler#resumeJob(JobKey)}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">resumeJob</span><span style="color:#f92672">(</span>JobKey jobKey<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> SchedulerException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">resumeJob</span><span style="color:#f92672">(</span>jobKey<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 删除Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * {@link org.quartz.Scheduler#deleteJob(JobKey)}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deleteJob</span><span style="color:#f92672">(</span>JobKey jobKey<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> SchedulerException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteJob</span><span style="color:#f92672">(</span>jobKey<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 修改Job 的cron表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">modifyJobCron</span><span style="color:#f92672">(</span>TaskDefine define<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        String cronExpression <span style="color:#f92672">=</span> define<span style="color:#f92672">.</span><span style="color:#a6e22e">getCronExpression</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//1.如果cron表达式的格式不正确,则返回修改失败
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>CronExpression<span style="color:#f92672">.</span><span style="color:#a6e22e">isValidExpression</span><span style="color:#f92672">(</span>cronExpression<span style="color:#f92672">))</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        JobKey jobKey <span style="color:#f92672">=</span> define<span style="color:#f92672">.</span><span style="color:#a6e22e">getJobKey</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        TriggerKey triggerKey <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TriggerKey<span style="color:#f92672">(</span>jobKey<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">(),</span> jobKey<span style="color:#f92672">.</span><span style="color:#a6e22e">getGroup</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            CronTrigger cronTrigger <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>CronTrigger<span style="color:#f92672">)</span> scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getTrigger</span><span style="color:#f92672">(</span>triggerKey<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            JobDataMap jobDataMap <span style="color:#f92672">=</span> getJobDataMap<span style="color:#f92672">(</span>define<span style="color:#f92672">.</span><span style="color:#a6e22e">getJobDataMap</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//2.如果cron发生变化了,则按新cron触发 进行重新启动定时任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>cronTrigger<span style="color:#f92672">.</span><span style="color:#a6e22e">getCronExpression</span><span style="color:#f92672">().</span><span style="color:#a6e22e">equalsIgnoreCase</span><span style="color:#f92672">(</span>cronExpression<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                CronTrigger trigger <span style="color:#f92672">=</span> TriggerBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">newTrigger</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">.</span><span style="color:#a6e22e">withIdentity</span><span style="color:#f92672">(</span>triggerKey<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">.</span><span style="color:#a6e22e">withSchedule</span><span style="color:#f92672">(</span>CronScheduleBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">cronSchedule</span><span style="color:#f92672">(</span>cronExpression<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">.</span><span style="color:#a6e22e">usingJobData</span><span style="color:#f92672">(</span>jobDataMap<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>                scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">rescheduleJob</span><span style="color:#f92672">(</span>triggerKey<span style="color:#f92672">,</span> trigger<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SchedulerException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            log<span style="color:#f92672">.</span><span style="color:#a6e22e">error</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;printStackTrace&#34;</span><span style="color:#f92672">,</span> e<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 获取定时任务的定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * JobDetail是任务的定义,Job是任务的执行逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param jobKey      定时任务的名称 组名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param description 定时任务的 描述
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param jobDataMap  定时任务的 元数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param jobClass    {@link org.quartz.Job} 定时任务的 真正执行逻辑定义类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> JobDetail <span style="color:#a6e22e">getJobDetail</span><span style="color:#f92672">(</span>JobKey jobKey<span style="color:#f92672">,</span> String description<span style="color:#f92672">,</span> JobDataMap jobDataMap<span style="color:#f92672">,</span> Class<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Job<span style="color:#f92672">&gt;</span> jobClass<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> JobBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">newJob</span><span style="color:#f92672">(</span>jobClass<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withIdentity</span><span style="color:#f92672">(</span>jobKey<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withDescription</span><span style="color:#f92672">(</span>description<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">setJobData</span><span style="color:#f92672">(</span>jobDataMap<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">usingJobData</span><span style="color:#f92672">(</span>jobDataMap<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">requestRecovery</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">storeDurably</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 获取Trigger (Job的触发器,执行规则)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param jobKey         定时任务的名称 组名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param description    定时任务的 描述
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param jobDataMap     定时任务的 元数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * @param cronExpression 定时任务的 执行cron表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Trigger <span style="color:#a6e22e">getTrigger</span><span style="color:#f92672">(</span>JobKey jobKey<span style="color:#f92672">,</span> String description<span style="color:#f92672">,</span> JobDataMap jobDataMap<span style="color:#f92672">,</span> String cronExpression<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> TriggerBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">newTrigger</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withIdentity</span><span style="color:#f92672">(</span>jobKey<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">(),</span> jobKey<span style="color:#f92672">.</span><span style="color:#a6e22e">getGroup</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withDescription</span><span style="color:#f92672">(</span>description<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">withSchedule</span><span style="color:#f92672">(</span>CronScheduleBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">cronSchedule</span><span style="color:#f92672">(</span>cronExpression<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">usingJobData</span><span style="color:#f92672">(</span>jobDataMap<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> JobDataMap <span style="color:#a6e22e">getJobDataMap</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">&lt;?,</span> <span style="color:#f92672">?&gt;</span> map<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> map <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> JobDataMap<span style="color:#f92672">()</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">new</span> JobDataMap<span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="九监听">九、监听</h2>
+<p>Quartz监听种类有：</p>
+<ul>
+<li>JobListener: 任务监听</li>
+<li>TriggerListener: 触发器监听</li>
+<li>SchedulerListener: 调度器监听</li>
+</ul>
+<p>作用域分为全局监听器和局部监听器，全局监听器能够接收所有job/trigger的事件通知，局部监听器只能接收在其上注册job/trigger的事件通知</p>
+<h3 id="1joblistener源码">1.JobListener源码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">JobListener</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//获取该JobListener的名称
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    String <span style="color:#a6e22e">getName</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Scheduler在JobDetail将要被执行时调用该方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobToBeExecuted</span><span style="color:#f92672">(</span>JobExecutionContext context<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Scheduler在JobDetail将要被执行时，但又被TriggerListener否决调用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobExecutionVetoed</span><span style="color:#f92672">(</span>JobExecutionContext context<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//任务执行完毕调用该方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobWasExecuted</span><span style="color:#f92672">(</span>JobExecutionContext context<span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>            JobExecutionException jobException<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>将JobListener绑定到Schedule中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">//监听所有的Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addJobListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleJobListener<span style="color:#f92672">(),</span> EverythingMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">allJobs</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//监听特定的Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addJobListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleJobListener<span style="color:#f92672">(),</span> KeyMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">keyEquals</span><span style="color:#f92672">(</span>JobKey<span style="color:#f92672">.</span><span style="color:#a6e22e">jobKey</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld1_Job&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;HelloWorld1_Group&#34;</span><span style="color:#f92672">)));</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//监听同一任务组的Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addJobListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleJobListener<span style="color:#f92672">(),</span> GroupMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">jobGroupEquals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld2_Group&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//监听两个任务组的Job
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addJobListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleJobListener<span style="color:#f92672">(),</span> OrMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">or</span><span style="color:#f92672">(</span>GroupMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">jobGroupEquals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld1_Group&#34;</span><span style="color:#f92672">),</span> GroupMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">jobGroupEquals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld2_Group&#34;</span><span style="color:#f92672">)));</span>
+</span></span></code></pre></div><h3 id="2triggerlistener源码">2.TriggerListener源码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TriggerListener</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//获取触发器的名字
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Job的execute()方法被调用时调用该方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">triggerFired</span><span style="color:#f92672">(</span>Trigger trigger<span style="color:#f92672">,</span> JobExecutionContext context<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Trigger触发后，TriggerListener给了一个选择否定Job的执行。假如该方法返回true，该Job将不会被触发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">vetoJobExecution</span><span style="color:#f92672">(</span>Trigger trigger<span style="color:#f92672">,</span> JobExecutionContext context<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Trigger错过触发时间触发该方法，此方法不应该含有长时间的处理逻辑。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">triggerMisfired</span><span style="color:#f92672">(</span>Trigger trigger<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Trigger被触发并且完成Job后触发。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">triggerComplete</span><span style="color:#f92672">(</span>Trigger trigger<span style="color:#f92672">,</span> JobExecutionContext context<span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> triggerInstructionCode<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>将TriggerListener绑定到Scheduler中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">//监听所有的Trigger
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addTriggerListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleTriggerListener<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SimpleTrigger&#34;</span><span style="color:#f92672">),</span> EverythingMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">allTriggers</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//监听特定的Trigger
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addTriggerListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleTriggerListener<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SimpleTrigger&#34;</span><span style="color:#f92672">),</span> KeyMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">keyEquals</span><span style="color:#f92672">(</span>TriggerKey<span style="color:#f92672">.</span><span style="color:#a6e22e">triggerKey</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWord1_Job&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;HelloWorld1_Group&#34;</span><span style="color:#f92672">)));</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//监听一组Trigger
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addTriggerListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleTriggerListener<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SimpleTrigger&#34;</span><span style="color:#f92672">),</span> GroupMatcher<span style="color:#f92672">.</span><span style="color:#a6e22e">groupEquals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld1_Group&#34;</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//移除监听器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">removeTriggerListener</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SimpleTrigger&#34;</span><span style="color:#f92672">);</span>
+</span></span></code></pre></div><h3 id="3schedulerlistener">3.SchedulerListener</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">SchedulerListener</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e">//用于部署JobDetail时调用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobScheduled</span><span style="color:#f92672">(</span>Trigger trigger<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//用于卸载JobDetail时调用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobUnscheduled</span><span style="color:#f92672">(</span>String triggerName<span style="color:#f92672">,</span> String triggerGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当一个Trigger没有触发次数时调用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">triggerFinalized</span><span style="color:#f92672">(</span>Trigger trigger<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">triggersPaused</span><span style="color:#f92672">(</span>String triggerName<span style="color:#f92672">,</span> String triggerGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">triggersResumed</span><span style="color:#f92672">(</span>String triggerName<span style="color:#f92672">,</span> String triggerGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当一个或一组 JobDetail 暂停时调用这个方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobsPaused</span><span style="color:#f92672">(</span>String jobName<span style="color:#f92672">,</span> String jobGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当一个或一组 Job 从暂停上恢复时调用这个方法。假如是一个 Job 组，jobName 参数将为 null。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">jobsResumed</span><span style="color:#f92672">(</span>String jobName<span style="color:#f92672">,</span> String jobGroup<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//在 Scheduler 的正常运行期间产生一个严重错误时调用这个方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">schedulerError</span><span style="color:#f92672">(</span>String msg<span style="color:#f92672">,</span> SchedulerException cause<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当Scheduler 开启时，调用该方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">schedulerStarted</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当Scheduler处于StandBy模式时，调用该方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">schedulerInStandbyMode</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当Scheduler停止时，调用该方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">schedulerShutdown</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当Scheduler中的数据被清除时，调用该方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">schedulingDataCleared</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>将SchedulerListener绑定到Scheduler中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">//创建监听
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">addSchedulerListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleSchedulerListener<span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//移除监听
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>scheduler<span style="color:#f92672">.</span><span style="color:#a6e22e">getListenerManager</span><span style="color:#f92672">().</span><span style="color:#a6e22e">removeSchedulerListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> SimpleSchedulerListener<span style="color:#f92672">());</span>
+</span></span></code></pre></div>
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一quartz基本配置">一、Quartz基本配置</a></li>
+        <li><a href="#二jobstore数据库表字段详解">二、jobstore数据库表字段详解</a></li>
+        <li><a href="#三任务的并行串行执行">三、任务的并行/串行执行</a>
+          <ul>
+            <li><a href="#1jobdetailfactorybean方式配置">1.JobDetailFactoryBean方式配置</a></li>
+            <li><a href="#2配置trigger和scheduler">2.配置Trigger和Scheduler</a></li>
+            <li><a href="#3quartz串行设置">3.Quartz串行设置</a></li>
+          </ul>
+        </li>
+        <li><a href="#四misfire处理机制">四、misfire处理机制</a>
+          <ul>
+            <li><a href="#1如何判定激活失败">1.如何判定激活失败</a></li>
+            <li><a href="#2激活失败如何处理">2.激活失败如何处理</a>
+              <ul>
+                <li><a href="#1-quartz中crontrigger使用的策略">1) quartz中CronTrigger使用的策略</a></li>
+                <li><a href="#2-quartz中simpletrigger使用的策略">2) quartz中SimpleTrigger使用的策略</a></li>
+                <li><a href="#3-misfire执行流程">3) misfire执行流程</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#五trigger状态转换">五、Trigger状态转换</a>
+          <ul>
+            <li><a href="#1正常获取触发任务执行流程">1.正常获取触发任务执行流程</a></li>
+            <li><a href="#2如何避免多个节点执行同一个任务">2.如何避免多个节点执行同一个任务</a></li>
+          </ul>
+        </li>
+        <li><a href="#六quartz集群">六、Quartz集群</a></li>
+        <li><a href="#七quartz异步通知">七、Quartz异步通知</a></li>
+        <li><a href="#八动态操作定时任务">八、动态操作定时任务</a>
+          <ul>
+            <li><a href="#1任务进行动态处理">1.任务进行动态处理</a></li>
+          </ul>
+        </li>
+        <li><a href="#九监听">九、监听</a>
+          <ul>
+            <li><a href="#1joblistener源码">1.JobListener源码</a></li>
+            <li><a href="#2triggerlistener源码">2.TriggerListener源码</a></li>
+            <li><a href="#3schedulerlistener">3.SchedulerListener</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+
+	
+	<span id="busuanzi_container_site_pv" >&copy; 2023 &nbsp; 黄粱一梦
+		&#128122;<span id="busuanzi_value_site_uv" style="display:inline"></span>
+    </span>
+	
+</footer></body>
+</html>
