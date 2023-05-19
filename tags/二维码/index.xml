@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>二维码 on Yangzw</title>
-    <link>blog.crazyyzw.top/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
+    <link>/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
     <description>Recent content in 二维码 on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 09 May 2022 22:45:23 +0800</lastBuildDate><atom:link href="blog.crazyyzw.top/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 May 2022 22:45:23 +0800</lastBuildDate><atom:link href="/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>二维码原理</title>
-      <link>blog.crazyyzw.top/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
+      <link>/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
       <pubDate>Mon, 09 May 2022 22:45:23 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</guid>
+      <guid>/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</guid>
       <description>二维码生成 二维码是一种特殊类型的条形码，易于被光学扫描仪读取来编码文本和数字，可对数字、字母和日文字符等信息进行编码。最小二维码是21×21像素，最大的是177×177像素。二维码具有纠错能力，总共分为4个级别，最低的是L，它可以校准7%的字码，然后是M可以校准15%的字码，再然后是Q可以校准25%的字码，最后是H可以校准30%的字码。
 创建步骤 数据分析：确定是否符号数字、字母、字节或日文模式的编码，再进行最优化的编码模式选择。 数据编码：下一级详细讲解。 生成纠错码：当得到文本对应的数据码后，必须再使用这些数据码生成纠错码，为了对扫描仪扫描结果存在错误进行纠正 最终编码：将生成的数据码与纠错码必须按照一定的顺序排列。 模块放置在矩阵：排列好数据码和纠错码后，需将这些二进制数字以特定的方式放置在二维码矩阵中。 掩码图案：二维码规范中定义了八个掩码图案，每种特定的图案可以改变原始二维码图案。 格式和版本信息：在先前步骤中留下空白的特定区域中增加格式和（如有必要）的版本信息。格式信息定义了纠错等级和掩码图案的模式。版本信息定义了二维码矩阵的大小和并且仅存在于较大的二维码中。 数据编码 二维码有如下编码模式：
 数字编码 字符编码 字节编码 日文编码 Extended Channel Interpretation（ECI）mode Structured Append mode FNC1 mode 如果输入字符串只包含数字，请使用数字编码模式；若数字模式不适用时，则选择字符编码模式(小写字母不能使用字符编码模式)；若字符编码也不适用且字符可以在ISO-8859-1字符集中找到，则使用字节编码模式；如果所有字符都在Shift JIS字符集中，请使用日文编码模式。
