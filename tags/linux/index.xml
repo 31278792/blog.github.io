@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on Yangzw</title>
-    <link>blog.crazyyzw.top/tags/linux/</link>
+    <link>/tags/linux/</link>
     <description>Recent content in Linux on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 10 Apr 2022 20:39:49 +0530</lastBuildDate><atom:link href="blog.crazyyzw.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Apr 2022 20:39:49 +0530</lastBuildDate><atom:link href="/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>完全卸载删除gitlab</title>
-      <link>blog.crazyyzw.top/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</link>
+      <link>/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</link>
       <pubDate>Sun, 10 Apr 2022 20:39:49 +0530</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</guid>
+      <guid>/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</guid>
       <description>1、停止gitlab gitlab-ctl stop 2、卸载gitlab rpm -e gitlab-ce 3、查看gitlab进程 ps aux | grep gitlab 4、杀掉/opt/gitlab/service.log进程 kill -9 进程号 5、删除所有包含gitlab文件 find / -name gitlab | xargs rm -rf </description>
     </item>
     

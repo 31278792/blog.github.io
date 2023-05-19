@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Yangzw</title>
-    <link>blog.crazyyzw.top/</link>
+    <link>/</link>
     <description>Recent content on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 31 Aug 2022 19:29:59 +0800</lastBuildDate><atom:link href="blog.crazyyzw.top/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 31 Aug 2022 19:29:59 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>实现电子签名涉及哪些步骤？</title>
-      <link>blog.crazyyzw.top/posts/%E7%94%B5%E5%AD%90%E7%AD%BE%E5%90%8D%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B/</link>
+      <link>/posts/%E7%94%B5%E5%AD%90%E7%AD%BE%E5%90%8D%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B/</link>
       <pubDate>Wed, 31 Aug 2022 19:29:59 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E7%94%B5%E5%AD%90%E7%AD%BE%E5%90%8D%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B/</guid>
+      <guid>/posts/%E7%94%B5%E5%AD%90%E7%AD%BE%E5%90%8D%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B/</guid>
       <description> 签名者身份确认：首先需要确认签名者的身份，确认签名者的身份可以通过各种方式实现，比如用户账号、身份证号码、手机号码等。 签名生成：签名生成过程中，需要通过加密算法生成签名值，保证签名的不可伪造性和不可篡改性。 签名验证：签名验证是指在签署电子合同时，需要对签名者身份进行验证，同时对签名值进行验证，以确保签名的有效性和完整性。 存证：存证是指将签名信息存储到可信的存证平台上，以便后续的证明和追溯。 </description>
     </item>
     
     <item>
       <title>外键的使用场景</title>
-      <link>blog.crazyyzw.top/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</link>
+      <link>/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</link>
       <pubDate>Wed, 24 Aug 2022 19:01:52 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</guid>
+      <guid>/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</guid>
       <description>1.互联网行业：不推荐使用外键。
 1.用户量大，并发度高，为此数据库服务器很容易成为性能瓶颈，尤其受IO能力限制，且不能轻易地水平扩展
 2.若是把数据一致性的控制放到事务中，即让应用服务器承担此部分的压力
@@ -33,10 +33,10 @@
     
     <item>
       <title>进程、线程、协程三者区别</title>
-      <link>blog.crazyyzw.top/posts/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B/</link>
+      <link>/posts/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B/</link>
       <pubDate>Mon, 18 Jul 2022 21:09:12 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B/</guid>
+      <guid>/posts/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B/</guid>
       <description>进程 进程是操作系统资源分配的最小单元，它拥有独立的地址空间、独立的内存和数据栈，其间通信需要通过进程间通信（IPC）机制。
 线程 线程是进程的执行单元，一个进程可以有多个线程，它们共享进程的地址空间和数据栈，但是每个线程都有自己的执行栈和程序计数器。线程之间可以通过共享内存等方式直接通信，同时也可以通过互斥锁、信号量等机制实现同步和互斥。
 协程 协程是一种轻量级的线程，也可以称为协作式多任务。协程与线程类似，但是它们的调度和切换不是由操作系统控制，而是由程序自身控制。协程的数据和栈都在程序的堆上分配，不会像线程一样占用操作系统的资源。因此，协程的创建和销毁非常快，切换也非常高效，可以大大提高程序的并发性和吞吐量。协程的主要作用是在单线程内实现并发，解决传统多线程并发编程中的线程切换、锁竞争等问题，同时也可以用于实现异步编程、事件驱动等场景。在Python、Go、Lua等语言中，协程已经成为了非常重要的编程范式，被广泛用于网络编程、高性能计算等领域。</description>
@@ -44,10 +44,10 @@
     
     <item>
       <title>软件开发各版本含义</title>
-      <link>blog.crazyyzw.top/posts/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%89%88%E6%9C%AC/</link>
+      <link>/posts/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%89%88%E6%9C%AC/</link>
       <pubDate>Fri, 01 Jul 2022 18:33:29 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%89%88%E6%9C%AC/</guid>
+      <guid>/posts/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%89%88%E6%9C%AC/</guid>
       <description>Alpha版本 处于软件开发过程初期阶段，通常只提供内部测试或部分用户测试使用，存在较多问题和漏洞。
 Beta版本 处于软件开发过程中期阶段，软件功能基本全部实现，但仍存在一些问题和漏洞，此时通常会向广泛的用户群体发布测试版本，以收集反馈和改进软件。
 RC版本 处于软件开发过程后期阶段，软件功能不再存在较大变动，此时会发布该候选版本（Release Candidate, 简称RC），并通过测试和反馈来进一步优化和改进软件。
@@ -57,19 +57,19 @@ RC版本 处于软件开发过程后期阶段，软件功能不再存在较大�
     
     <item>
       <title>系统架构需要考虑哪些方面？</title>
-      <link>blog.crazyyzw.top/posts/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</link>
+      <link>/posts/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</link>
       <pubDate>Mon, 20 Jun 2022 20:29:02 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</guid>
+      <guid>/posts/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</guid>
       <description> 业务需求：需要考虑业务需求，以确定架构的范围和功能，以及架构的可扩展性。 技术选型：需要考虑技术选型，以确定架构的技术架构，以及技术的可扩展性。 架构设计：需要考虑架构设计，以确定架构的组件、模块、接口、数据库等，以及架构的可维护性。 性能优化：需要考虑性能优化，以确定架构的性能指标，以及架构的可优化性。 安全性：需要考虑安全性，以确定架构的安全措施，以及架构的可安全性。 </description>
     </item>
     
     <item>
       <title>Quartz使用</title>
-      <link>blog.crazyyzw.top/posts/quartz/</link>
+      <link>/posts/quartz/</link>
       <pubDate>Wed, 15 Jun 2022 21:29:01 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/quartz/</guid>
+      <guid>/posts/quartz/</guid>
       <description>Quartz是一个开源的作业调度框架，它完全由Java写成，并设计用于J2SE和J2EE应用中。
 参考博客网址
 一、Quartz基本配置 Quartz三大核心元素：Scheduler(调度器)、Trigger(触发器)、job(任务)。
@@ -82,10 +82,10 @@ pom依赖：
     
     <item>
       <title>分布式系统介绍</title>
-      <link>blog.crazyyzw.top/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</link>
+      <link>/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Sun, 15 May 2022 21:29:01 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</guid>
+      <guid>/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</guid>
       <description>优点 可靠性、高容错性
 一台服务器的崩溃，不会影响其他服务器，其他服务器仍能提供服务。
 可扩展性
@@ -123,10 +123,10 @@ MetaQ（全称Metamorphosis）是一个高性能、高可用、可扩展的分�
     
     <item>
       <title>二维码原理</title>
-      <link>blog.crazyyzw.top/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
+      <link>/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</link>
       <pubDate>Mon, 09 May 2022 22:45:23 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</guid>
+      <guid>/posts/%E4%BA%8C%E7%BB%B4%E7%A0%81/</guid>
       <description>二维码生成 二维码是一种特殊类型的条形码，易于被光学扫描仪读取来编码文本和数字，可对数字、字母和日文字符等信息进行编码。最小二维码是21×21像素，最大的是177×177像素。二维码具有纠错能力，总共分为4个级别，最低的是L，它可以校准7%的字码，然后是M可以校准15%的字码，再然后是Q可以校准25%的字码，最后是H可以校准30%的字码。
 创建步骤 数据分析：确定是否符号数字、字母、字节或日文模式的编码，再进行最优化的编码模式选择。 数据编码：下一级详细讲解。 生成纠错码：当得到文本对应的数据码后，必须再使用这些数据码生成纠错码，为了对扫描仪扫描结果存在错误进行纠正 最终编码：将生成的数据码与纠错码必须按照一定的顺序排列。 模块放置在矩阵：排列好数据码和纠错码后，需将这些二进制数字以特定的方式放置在二维码矩阵中。 掩码图案：二维码规范中定义了八个掩码图案，每种特定的图案可以改变原始二维码图案。 格式和版本信息：在先前步骤中留下空白的特定区域中增加格式和（如有必要）的版本信息。格式信息定义了纠错等级和掩码图案的模式。版本信息定义了二维码矩阵的大小和并且仅存在于较大的二维码中。 数据编码 二维码有如下编码模式：
 数字编码 字符编码 字节编码 日文编码 Extended Channel Interpretation（ECI）mode Structured Append mode FNC1 mode 如果输入字符串只包含数字，请使用数字编码模式；若数字模式不适用时，则选择字符编码模式(小写字母不能使用字符编码模式)；若字符编码也不适用且字符可以在ISO-8859-1字符集中找到，则使用字节编码模式；如果所有字符都在Shift JIS字符集中，请使用日文编码模式。
@@ -139,10 +139,10 @@ MetaQ（全称Metamorphosis）是一个高性能、高可用、可扩展的分�
     
     <item>
       <title>Durid的介绍及应用场景</title>
-      <link>blog.crazyyzw.top/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
+      <link>/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
       <pubDate>Mon, 25 Apr 2022 19:49:11 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
+      <guid>/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
       <description>Apache Druid是一个高性能的实时分析型数据库
 云原生、流原生的分析型数据库
 Druid专为需要快速数据查询与摄入的工作流程而设计，在即时数据可见性、即时查询、运营分析以及高并发等方面表现非常出色。在实际中众多场景下数据仓库解决方案中，可以考虑将Druid当做一种开源的替代解决方案。 可轻松与现有的数据管道进行集成
@@ -161,10 +161,10 @@ Druid特征 列式存储 可扩展的分布式系统 大规模并行处理 实�
     
     <item>
       <title>MyBatis介绍及使用</title>
-      <link>blog.crazyyzw.top/posts/mybatis/</link>
+      <link>/posts/mybatis/</link>
       <pubDate>Fri, 15 Apr 2022 18:30:23 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/mybatis/</guid>
+      <guid>/posts/mybatis/</guid>
       <description>一、什么是MyBatis？ MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
 1.MyBatis衍生工具 MyBatis-Plus：是一个MyBatis增强工具，在MyBatis的基础上只做增强不做改变，为简化开发、提高效率而生。
 TkMyBatis：是基于 Mybatis 框架开发的一个工具，通过调用它提供的方法实现对单表的数据操作，不需要写任何 sql 语句，这极大地提高了项目开发效率。
@@ -179,46 +179,46 @@ DataSource dataSource = BlogDataSourceFactory.</description>
     
     <item>
       <title>Stream常见用法</title>
-      <link>blog.crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</link>
+      <link>/posts/stream%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Tue, 12 Apr 2022 21:29:01 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</guid>
+      <guid>/posts/stream%E4%BD%BF%E7%94%A8/</guid>
       <description>匹配集合数据 boolean isFound = userList.stream().anyMatch(user -&amp;gt; Objects.equals(user.getId(), userId)); 过滤集合数据 List&amp;lt;UserDO&amp;gt; resultList = userList.stream() .filter(user -&amp;gt; Boolean.TRUE.equals(user.getIsSuper())) .collect(Collectors.toList()); 汇总集合数据 double total = accountList.stream().mapToDouble(Account::getBalace).sum(); 转化集合数据 List&amp;lt;UserVO&amp;gt; userVOList = userDOList.stream().map(this::transUser).collect(Collectors.toList()); 分组集合数据 Map&amp;lt;Long, List&amp;lt;UserDO&amp;gt;&amp;gt; roleUserMap = userDOList.stream() .collect(Collectors.groupingBy(UserDO::getRoleId)); 分组汇总集合 roleTotalMap = accountList.stream() .collect(Collectors.groupingBy(Account::getRoleId,Collectors.summingDouble(Account::getBalance))); 生成范围集合 int[] array1 = IntStream.rangeClosed(1,N).toArray(); int[] array2 = IntStream.iterate(1, n -&amp;gt; n*2).limit(N).toArray(); </description>
     </item>
     
     <item>
       <title>完全卸载删除gitlab</title>
-      <link>blog.crazyyzw.top/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</link>
+      <link>/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</link>
       <pubDate>Sun, 10 Apr 2022 20:39:49 +0530</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</guid>
+      <guid>/posts/%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4gitlab/</guid>
       <description>1、停止gitlab gitlab-ctl stop 2、卸载gitlab rpm -e gitlab-ce 3、查看gitlab进程 ps aux | grep gitlab 4、杀掉/opt/gitlab/service.log进程 kill -9 进程号 5、删除所有包含gitlab文件 find / -name gitlab | xargs rm -rf </description>
     </item>
     
     <item>
       <title>Blüdhaven</title>
-      <link>blog.crazyyzw.top/projects/bludhaven/</link>
+      <link>/projects/bludhaven/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>blog.crazyyzw.top/projects/bludhaven/</guid>
+      <guid>/projects/bludhaven/</guid>
       <description>History Blüdhaven was a former whaling town, which was officially incorporated as a &amp;ldquo;Commonwealth&amp;rdquo; in 1912. The town had a generally poor socio-economic populace, owing in part to failed efforts to transform itself into a manufacturing and shipping center.</description>
     </item>
     
     <item>
       <title>Hydra</title>
-      <link>blog.crazyyzw.top/projects/hydra/</link>
+      <link>/projects/hydra/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>blog.crazyyzw.top/projects/hydra/</guid>
+      <guid>/projects/hydra/</guid>
       <description>Motto Cut off one head and two will take their place</description>
     </item>
     
     <item>
       <title>Tatooine</title>
-      <link>blog.crazyyzw.top/projects/tatooine/</link>
+      <link>/projects/tatooine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>blog.crazyyzw.top/projects/tatooine/</guid>
+      <guid>/projects/tatooine/</guid>
       <description>A long time ago in a galaxy far, far away&amp;hellip;. A project was planned, but never completed</description>
     </item>
     

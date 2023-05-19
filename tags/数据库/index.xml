@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>数据库 on Yangzw</title>
-    <link>blog.crazyyzw.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <link>/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
     <description>Recent content in 数据库 on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Aug 2022 19:01:52 +0800</lastBuildDate><atom:link href="blog.crazyyzw.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 Aug 2022 19:01:52 +0800</lastBuildDate><atom:link href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>外键的使用场景</title>
-      <link>blog.crazyyzw.top/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</link>
+      <link>/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</link>
       <pubDate>Wed, 24 Aug 2022 19:01:52 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</guid>
+      <guid>/posts/%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%A1%A8%E5%A4%96%E9%94%AE%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6/</guid>
       <description>1.互联网行业：不推荐使用外键。
 1.用户量大，并发度高，为此数据库服务器很容易成为性能瓶颈，尤其受IO能力限制，且不能轻易地水平扩展
 2.若是把数据一致性的控制放到事务中，即让应用服务器承担此部分的压力
@@ -24,10 +24,10 @@
     
     <item>
       <title>Durid的介绍及应用场景</title>
-      <link>blog.crazyyzw.top/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
+      <link>/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
       <pubDate>Mon, 25 Apr 2022 19:49:11 +0800</pubDate>
       
-      <guid>blog.crazyyzw.top/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
+      <guid>/posts/druid%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
       <description>Apache Druid是一个高性能的实时分析型数据库
 云原生、流原生的分析型数据库
 Druid专为需要快速数据查询与摄入的工作流程而设计，在即时数据可见性、即时查询、运营分析以及高并发等方面表现非常出色。在实际中众多场景下数据仓库解决方案中，可以考虑将Druid当做一种开源的替代解决方案。 可轻松与现有的数据管道进行集成
