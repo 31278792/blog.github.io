@@ -117,7 +117,7 @@ let config = {
 		height: 200, // canvas的高度
 		position: 'left', // 显示位置：左或右
 		hOffset: 0, // canvas水平偏移
-		vOffset: 202, // canvas垂直偏移
+		vOffset: 100, // canvas垂直偏移
 	},
 	mobile: {
 		show: false, // 是否在移动设备上显示

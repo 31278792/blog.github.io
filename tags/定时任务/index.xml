@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>定时任务 on Yangzw</title>
-    <link>https://crazyyzw.top/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</link>
+    <link>blog.crazyyzw.top/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</link>
     <description>Recent content in 定时任务 on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Jun 2022 21:29:01 +0800</lastBuildDate><atom:link href="https://crazyyzw.top/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Jun 2022 21:29:01 +0800</lastBuildDate><atom:link href="blog.crazyyzw.top/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Quartz使用</title>
-      <link>https://crazyyzw.top/posts/quartz/</link>
+      <link>blog.crazyyzw.top/posts/quartz/</link>
       <pubDate>Wed, 15 Jun 2022 21:29:01 +0800</pubDate>
       
-      <guid>https://crazyyzw.top/posts/quartz/</guid>
+      <guid>blog.crazyyzw.top/posts/quartz/</guid>
       <description>Quartz是一个开源的作业调度框架，它完全由Java写成，并设计用于J2SE和J2EE应用中。
 参考博客网址
 一、Quartz基本配置 Quartz三大核心元素：Scheduler(调度器)、Trigger(触发器)、job(任务)。

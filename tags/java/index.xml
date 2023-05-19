@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Java on Yangzw</title>
-    <link>https://crazyyzw.top/tags/java/</link>
+    <link>blog.crazyyzw.top/tags/java/</link>
     <description>Recent content in Java on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Jun 2022 21:29:01 +0800</lastBuildDate><atom:link href="https://crazyyzw.top/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Jun 2022 21:29:01 +0800</lastBuildDate><atom:link href="blog.crazyyzw.top/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Quartz使用</title>
-      <link>https://crazyyzw.top/posts/quartz/</link>
+      <link>blog.crazyyzw.top/posts/quartz/</link>
       <pubDate>Wed, 15 Jun 2022 21:29:01 +0800</pubDate>
       
-      <guid>https://crazyyzw.top/posts/quartz/</guid>
+      <guid>blog.crazyyzw.top/posts/quartz/</guid>
       <description>Quartz是一个开源的作业调度框架，它完全由Java写成，并设计用于J2SE和J2EE应用中。
 参考博客网址
 一、Quartz基本配置 Quartz三大核心元素：Scheduler(调度器)、Trigger(触发器)、job(任务)。
@@ -25,10 +25,10 @@ pom依赖：
     
     <item>
       <title>MyBatis介绍及使用</title>
-      <link>https://crazyyzw.top/posts/mybatis/</link>
+      <link>blog.crazyyzw.top/posts/mybatis/</link>
       <pubDate>Fri, 15 Apr 2022 18:30:23 +0800</pubDate>
       
-      <guid>https://crazyyzw.top/posts/mybatis/</guid>
+      <guid>blog.crazyyzw.top/posts/mybatis/</guid>
       <description>一、什么是MyBatis？ MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
 1.MyBatis衍生工具 MyBatis-Plus：是一个MyBatis增强工具，在MyBatis的基础上只做增强不做改变，为简化开发、提高效率而生。
 TkMyBatis：是基于 Mybatis 框架开发的一个工具，通过调用它提供的方法实现对单表的数据操作，不需要写任何 sql 语句，这极大地提高了项目开发效率。
@@ -43,10 +43,10 @@ DataSource dataSource = BlogDataSourceFactory.</description>
     
     <item>
       <title>Stream常见用法</title>
-      <link>https://crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</link>
+      <link>blog.crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Tue, 12 Apr 2022 21:29:01 +0800</pubDate>
       
-      <guid>https://crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</guid>
+      <guid>blog.crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</guid>
       <description>匹配集合数据 boolean isFound = userList.stream().anyMatch(user -&amp;gt; Objects.equals(user.getId(), userId)); 过滤集合数据 List&amp;lt;UserDO&amp;gt; resultList = userList.stream() .filter(user -&amp;gt; Boolean.TRUE.equals(user.getIsSuper())) .collect(Collectors.toList()); 汇总集合数据 double total = accountList.stream().mapToDouble(Account::getBalace).sum(); 转化集合数据 List&amp;lt;UserVO&amp;gt; userVOList = userDOList.stream().map(this::transUser).collect(Collectors.toList()); 分组集合数据 Map&amp;lt;Long, List&amp;lt;UserDO&amp;gt;&amp;gt; roleUserMap = userDOList.stream() .collect(Collectors.groupingBy(UserDO::getRoleId)); 分组汇总集合 roleTotalMap = accountList.stream() .collect(Collectors.groupingBy(Account::getRoleId,Collectors.summingDouble(Account::getBalance))); 生成范围集合 int[] array1 = IntStream.rangeClosed(1,N).toArray(); int[] array2 = IntStream.iterate(1, n -&amp;gt; n*2).limit(N).toArray(); </description>
     </item>
     
