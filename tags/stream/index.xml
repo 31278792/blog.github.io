@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stream on Yangzw</title>
-    <link>/tags/stream/</link>
+    <link>blog.crazyyzw.top/tags/stream/</link>
     <description>Recent content in Stream on Yangzw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 12 Apr 2022 21:29:01 +0800</lastBuildDate><atom:link href="/tags/stream/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Apr 2022 21:29:01 +0800</lastBuildDate><atom:link href="blog.crazyyzw.top/tags/stream/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Stream常见用法</title>
-      <link>/posts/stream%E4%BD%BF%E7%94%A8/</link>
+      <link>blog.crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Tue, 12 Apr 2022 21:29:01 +0800</pubDate>
       
-      <guid>/posts/stream%E4%BD%BF%E7%94%A8/</guid>
+      <guid>blog.crazyyzw.top/posts/stream%E4%BD%BF%E7%94%A8/</guid>
       <description>匹配集合数据 boolean isFound = userList.stream().anyMatch(user -&amp;gt; Objects.equals(user.getId(), userId)); 过滤集合数据 List&amp;lt;UserDO&amp;gt; resultList = userList.stream() .filter(user -&amp;gt; Boolean.TRUE.equals(user.getIsSuper())) .collect(Collectors.toList()); 汇总集合数据 double total = accountList.stream().mapToDouble(Account::getBalace).sum(); 转化集合数据 List&amp;lt;UserVO&amp;gt; userVOList = userDOList.stream().map(this::transUser).collect(Collectors.toList()); 分组集合数据 Map&amp;lt;Long, List&amp;lt;UserDO&amp;gt;&amp;gt; roleUserMap = userDOList.stream() .collect(Collectors.groupingBy(UserDO::getRoleId)); 分组汇总集合 roleTotalMap = accountList.stream() .collect(Collectors.groupingBy(Account::getRoleId,Collectors.summingDouble(Account::getBalance))); 生成范围集合 int[] array1 = IntStream.rangeClosed(1,N).toArray(); int[] array2 = IntStream.iterate(1, n -&amp;gt; n*2).limit(N).toArray(); </description>
     </item>
     
